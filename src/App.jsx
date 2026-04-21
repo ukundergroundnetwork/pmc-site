@@ -895,9 +895,16 @@ export default function App() {
                 <div className="mt-4 overflow-hidden border border-white/20 bg-white/5">
                   <div className="aspect-[1/1] w-full overflow-hidden bg-black">
                     <img
+                      key={activeArtist?.key}
                       src={`/${activeArtist?.key}.png`}
                       alt={activeArtist?.display}
                       className="h-full w-full object-cover"
+                      onLoad={(e) => {
+                        e.currentTarget.style.display = "block";
+                        const fallback =
+                          e.currentTarget.parentElement.querySelector(".fallback-artist");
+                        if (fallback) fallback.style.display = "none";
+                      }}
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                         const fallback =
@@ -905,6 +912,7 @@ export default function App() {
                         if (fallback) fallback.style.display = "flex";
                       }}
                     />
+
                     <div className="fallback-artist hidden h-full w-full items-center justify-center p-8 text-center text-3xl font-black tracking-[0.2em] text-white/80">
                       {activeArtist?.display}
                     </div>
