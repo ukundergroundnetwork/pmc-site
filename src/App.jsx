@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 
-const ACCESS_PASSWORD = "you know way too much";
+const ACCESS_PASSWORD = "ukugn2";
 
 const ARTISTS = [
   {
@@ -131,8 +131,7 @@ export default function App() {
   const [passwordAccepted, setPasswordAccepted] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [entered, setEntered] = useState(false);
-  const [showSoundPrompt, setShowSoundPrompt] = useState(false);
-  const [showPosterHint, setShowPosterHint] = useState(true);
+  const [showExperiencePrompt, setShowExperiencePrompt] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
   const [activeTab, setActiveTab] = useState("poster");
   const [activeArtistKey, setActiveArtistKey] = useState(ARTISTS[0].key);
@@ -189,13 +188,13 @@ export default function App() {
   };
 
   const handleEnterExperience = () => {
-    setShowSoundPrompt(true);
+    setShowExperiencePrompt(true);
   };
 
-  const handleSoundChoice = (enabled) => {
+  const handleExperienceChoice = (enabled) => {
     setSoundOn(enabled);
     setEntered(true);
-    setShowSoundPrompt(false);
+    setShowExperiencePrompt(false);
   };
 
   const selectArtist = (key) => {
@@ -231,6 +230,7 @@ export default function App() {
         html, body, #root {
           max-width: 100%;
           overflow-x: hidden;
+          background: #000;
         }
         @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .9; } 52% { opacity: .98; } }
         .grain {
@@ -343,7 +343,7 @@ export default function App() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {showSoundPrompt && (
+        {showExperiencePrompt && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -358,67 +358,31 @@ export default function App() {
               className="relative w-full max-w-xl border border-white/20 bg-black p-6 text-center sm:p-8"
             >
               <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
-                AUDIO PREFERENCE
+                INTERACTIVE EXPERIENCE
               </div>
               <h2 className="mt-3 text-2xl font-black tracking-[0.12em] sm:text-3xl">
                 ENABLE SOUND?
               </h2>
               <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75 sm:text-base">
-                The artists have chosen to share their music while you browse. Please
-                select whether you would like audio enabled for this experience.
+                Click on any artist name on the poster to hear their music, read their
+                bio, or find links. Please choose whether to enable or disable sound
+                for this experience.
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 <button
-                  onClick={() => handleSoundChoice(true)}
+                  onClick={() => handleExperienceChoice(true)}
                   className="inline-flex items-center justify-center border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
                 >
                   ENABLE SOUND
                 </button>
                 <button
-                  onClick={() => handleSoundChoice(false)}
+                  onClick={() => handleExperienceChoice(false)}
                   className="inline-flex items-center justify-center border border-white/20 px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-white"
                 >
                   CONTINUE WITHOUT SOUND
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {passwordAccepted && entered && showPosterHint && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[55] flex items-center justify-center bg-black/88 px-6"
-          >
-            <div className="absolute inset-0 grain" />
-            <motion.div
-              initial={{ y: 14, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 14, opacity: 0 }}
-              className="relative w-full max-w-xl border border-white/20 bg-black p-6 text-center sm:p-8"
-            >
-              <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
-                QUICK NOTE
-              </div>
-              <h2 className="mt-3 text-2xl font-black tracking-[0.12em] sm:text-3xl">
-                INTERACTIVE LINEUP
-              </h2>
-              <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75 sm:text-base">
-                Click any artist name on the poster to preview their music, view their
-                bio, and access their artist links.
-              </p>
-
-              <button
-                onClick={() => setShowPosterHint(false)}
-                className="mt-8 inline-flex items-center justify-center border border-white bg-white px-6 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
-              >
-                CONFIRM
-              </button>
             </motion.div>
           </motion.div>
         )}
@@ -496,7 +460,14 @@ export default function App() {
             </div>
           </header>
 
-          <main className="mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-28 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
+          <main className="mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-12 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
+            <div className="md:hidden">
+              <button className="inline-flex w-full items-center justify-center gap-2 border border-white bg-white px-4 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black">
+                <Ticket className="h-4 w-4" />
+                GET ACCESS
+              </button>
+            </div>
+
             <section className="relative overflow-hidden border border-white/20 bg-black/85 shadow-2xl shadow-black/50">
               <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05),transparent_18%,transparent_82%,rgba(255,255,255,0.04))]" />
               <div
@@ -551,12 +522,13 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "LONESTAR + NOAH KNIGHT"]}
+                          artists={["REVIVECHIZL", "KYRXN", "WMB", "WHOISPDP"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["KAZGETKASH + JVR", "WHOISPDP", "WMB", "DRACOIST", "VELLI"]}
+                          artists={["LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "DRACOIST", "VELLI"]}
                           onSelect={selectArtist}
+                          keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
                         <ArtistLine
                           artists={["LUVATT + ROMEREO", "BBY GLO", "REZ818", "DULL3N"]}
@@ -776,10 +748,6 @@ export default function App() {
               </div>
             </aside>
           </main>
-
-          <button className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 border border-white bg-white px-5 py-3 text-[0.7rem] font-black tracking-[0.4em] text-black shadow-2xl shadow-black/40 md:hidden">
-            GET ACCESS · £5
-          </button>
         </div>
       )}
     </div>
@@ -795,31 +763,51 @@ function SectionTitle({ eyebrow, title }) {
   );
 }
 
-function ArtistLine({ artists, onSelect }) {
+function ArtistLine({ artists, onSelect, keepPairsTogether = [] }) {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
       {artists.map((name, index) => {
         const normalized = name.toLowerCase();
+        const shouldKeepTogether = keepPairsTogether.includes(name);
 
         return (
           <React.Fragment key={`${name}-${index}`}>
             {normalized.includes(" + ") ? (
-              <>
-                {name.split(" + ").map((part, partIndex, arr) => {
-                  const displayName = part.trim();
-                  return (
-                    <React.Fragment key={`${displayName}-${partIndex}`}>
-                      <button
-                        onClick={() => onSelect(mapArtistNameToKey(displayName))}
-                        className="transition hover:opacity-70"
-                      >
-                        {displayName}
-                      </button>
-                      {partIndex < arr.length - 1 && <span>+</span>}
-                    </React.Fragment>
-                  );
-                })}
-              </>
+              shouldKeepTogether ? (
+                <span className="inline-flex flex-nowrap items-center gap-x-2 whitespace-nowrap">
+                  {name.split(" + ").map((part, partIndex, arr) => {
+                    const displayName = part.trim();
+                    return (
+                      <React.Fragment key={`${displayName}-${partIndex}`}>
+                        <button
+                          onClick={() => onSelect(mapArtistNameToKey(displayName))}
+                          className="whitespace-nowrap transition hover:opacity-70"
+                        >
+                          {displayName}
+                        </button>
+                        {partIndex < arr.length - 1 && <span>+</span>}
+                      </React.Fragment>
+                    );
+                  })}
+                </span>
+              ) : (
+                <>
+                  {name.split(" + ").map((part, partIndex, arr) => {
+                    const displayName = part.trim();
+                    return (
+                      <React.Fragment key={`${displayName}-${partIndex}`}>
+                        <button
+                          onClick={() => onSelect(mapArtistNameToKey(displayName))}
+                          className="transition hover:opacity-70"
+                        >
+                          {displayName}
+                        </button>
+                        {partIndex < arr.length - 1 && <span>+</span>}
+                      </React.Fragment>
+                    );
+                  })}
+                </>
+              )
             ) : (
               <button
                 onClick={() => onSelect(mapArtistNameToKey(name))}
