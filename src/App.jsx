@@ -553,7 +553,7 @@ export default function App() {
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
                         <ArtistLine
-                          artists={["LUVATT + ROMEREO", "VELLI", "WHOISPDP", "REZ818"]}
+                          artists={["LUVATT + ROMEREO", "WHOISPDP", "VELLI", "BBY GLO", "REZ818"]}
                           onSelect={selectArtist}
                         />
                       </div>
@@ -564,7 +564,7 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "10K", "DRACOIST", "VELLI"]}
+                          artists={["REVIVECHIZL", "KYRXN", "10K", "DRACOIST"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
@@ -573,7 +573,7 @@ export default function App() {
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
                         <ArtistLine
-                          artists={["LUVATT + ROMEREO", "BBY GLO", "REZ818", "DULL3N"]}
+                          artists={["LUVATT + ROMEREO", "VELLI", "REZ818", "DULL3N"]}
                           onSelect={selectArtist}
                         />
                       </div>
