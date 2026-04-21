@@ -11,6 +11,8 @@ import {
   X,
 } from "lucide-react";
 
+const ACCESS_PASSWORD = "you know way too much";
+
 const ARTISTS = [
   {
     display: "THATICEKIDD",
@@ -70,7 +72,7 @@ const ARTISTS = [
   {
     display: "WMB",
     key: "wmb",
-    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    bio: "High-energy demo placeholder. Replace this with a short 2–4 line artist description for the live site.",
   },
   {
     display: "DRACOIST",
@@ -116,8 +118,12 @@ function cn(...classes) {
 }
 
 export default function App() {
+  const [passwordValue, setPasswordValue] = useState("");
+  const [passwordAccepted, setPasswordAccepted] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
   const [entered, setEntered] = useState(false);
-  const [soundOn, setSoundOn] = useState(true);
+  const [showSoundPrompt, setShowSoundPrompt] = useState(false);
+  const [soundOn, setSoundOn] = useState(false);
   const [activeTab, setActiveTab] = useState("poster");
   const [activeArtistKey, setActiveArtistKey] = useState(ARTISTS[0].key);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -129,31 +135,52 @@ export default function App() {
   );
 
   useEffect(() => {
-    document.body.style.overflow = entered ? "" : "hidden";
+    document.body.style.overflow = passwordAccepted && entered ? "" : "hidden";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [entered]);
+  }, [passwordAccepted, entered]);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const src = `/${activeArtist.key}.mp3`;
-    const hasAudio = !!activeArtist.key;
 
     audio.pause();
     audio.removeAttribute("src");
     audio.load();
 
-    if (entered && soundOn && hasAudio) {
+    if (entered && soundOn) {
       audio.src = src;
       audio.currentTime = 0;
       audio.play().catch(() => {
-        // Browsers may block autoplay; user can press play in the panel.
+        // User can manually start playback later if autoplay is blocked.
       });
     }
   }, [activeArtist, entered, soundOn]);
+
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+
+    if (passwordValue.trim().toLowerCase() === ACCESS_PASSWORD.toLowerCase()) {
+      setPasswordAccepted(true);
+      setPasswordError("");
+      return;
+    }
+
+    setPasswordError("Incorrect password.");
+  };
+
+  const handleEnterExperience = () => {
+    setShowSoundPrompt(true);
+  };
+
+  const handleSoundChoice = (enabled) => {
+    setSoundOn(enabled);
+    setEntered(true);
+    setShowSoundPrompt(false);
+  };
 
   const selectArtist = (key) => {
     setActiveArtistKey(key);
@@ -166,6 +193,7 @@ export default function App() {
     if (!audio) return;
 
     if (audio.paused) {
+      setSoundOn(true);
       audio.src = `/${activeArtist.key}.mp3`;
       try {
         await audio.play();
@@ -184,26 +212,63 @@ export default function App() {
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
-        @keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .88; } 52% { opacity: .98; } }
-        @keyframes drift { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+        @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .9; } 52% { opacity: .98; } }
         .grain {
           background-image:
-            radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px),
-            radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+            radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
           background-size: 3px 3px, 7px 7px;
           background-position: 0 0, 1px 1px;
           mix-blend-mode: screen;
-          opacity: .08;
+          opacity: .06;
           pointer-events: none;
         }
-        .poster-border { border-color: rgba(255,255,255,.9); }
       `}</style>
 
       <audio ref={audioRef} preload="none" />
 
+      {!passwordAccepted && (
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black px-6">
+          <div className="absolute inset-0 grain" />
+          <form
+            onSubmit={handlePasswordSubmit}
+            className="relative w-full max-w-md rounded-[2rem] border border-white/20 bg-black/90 p-6 sm:p-8"
+          >
+            <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
+              PRIVATE ACCESS
+            </div>
+            <h1 className="mt-3 text-3xl font-black leading-none tracking-[0.12em] sm:text-4xl">
+              ENTER PASSWORD
+            </h1>
+            <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75">
+              This preview is currently private while edits are in progress.
+            </p>
+
+            <input
+              type="password"
+              value={passwordValue}
+              onChange={(e) => setPasswordValue(e.target.value)}
+              placeholder="Password"
+              className="mt-6 w-full rounded-full border border-white/20 bg-white/5 px-5 py-4 text-sm tracking-[0.08em] text-white outline-none placeholder:text-white/35 focus:border-white/60"
+            />
+
+            {passwordError && (
+              <div className="mt-3 text-sm font-medium text-white/70">{passwordError}</div>
+            )}
+
+            <button
+              type="submit"
+              className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
+            >
+              CONTINUE
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </form>
+        </div>
+      )}
+
       <AnimatePresence>
-        {!entered && (
+        {passwordAccepted && !entered && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -211,50 +276,94 @@ export default function App() {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black px-6"
           >
             <div className="absolute inset-0 grain" />
-            <button
-              onClick={() => setEntered(true)}
-              className="relative flex w-full max-w-md flex-col items-center justify-center gap-6 text-center"
-            >
-              <div className="relative h-56 w-56 sm:h-64 sm:w-64">
+
+            <div className="relative flex w-full max-w-3xl flex-col items-center justify-center text-center">
+              <div className="w-full max-w-[980px]">
                 <img
                   src="/logo.png"
-                  alt="PMC logo"
-                  className="h-full w-full object-contain"
-                  style={{ animation: "slowSpin 10s linear infinite" }}
+                  alt="UK Underground Network logo"
+                  className="mx-auto w-full max-w-[980px] object-contain"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
-                    e.currentTarget.parentElement
-                      .querySelector(".fallback-logo")
-                      .style.display = "flex";
+                    const fallback = e.currentTarget.parentElement.querySelector(".fallback-logo");
+                    if (fallback) fallback.style.display = "block";
                   }}
                 />
-                <div
-                  className="fallback-logo hidden h-full w-full items-center justify-center rounded-full border border-white/70 text-3xl font-black tracking-[0.35em]"
-                  style={{ animation: "slowSpin 10s linear infinite" }}
-                >
-                  PMC
+                <div className="fallback-logo hidden text-[clamp(4rem,16vw,10rem)] font-black tracking-[0.08em] text-white">
+                  UKUGN
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <div className="text-[clamp(2rem,7vw,4.5rem)] font-black leading-none tracking-[0.18em]">
-                  PRIVATE MEMBERS CLUB
-                </div>
-                <div className="text-xs font-bold tracking-[0.5em] text-white/80 sm:text-sm">
-                  ACCESS: LIMITED
-                </div>
+              <div className="mt-10 text-[0.7rem] font-black tracking-[0.48em] text-white/75 sm:text-[0.82rem]">
+                UKUNDERGROUNDNETWORK PRESENTS:
               </div>
 
-              <div className="mt-2 flex items-center gap-3 rounded-full border border-white/70 px-5 py-3 text-xs font-bold tracking-[0.28em] sm:text-sm">
+              <div className="mt-4 text-[clamp(2rem,7vw,5rem)] font-black leading-[0.92] tracking-[0.12em]">
+                PRIVATE MEMBERS CLUB 001
+              </div>
+
+              <div className="mt-6 text-[0.75rem] font-black tracking-[0.45em] text-white/75 sm:text-sm">
+                ACCESS: LIMITED
+              </div>
+
+              <button
+                onClick={handleEnterExperience}
+                className="mt-10 inline-flex items-center gap-3 rounded-full border border-white bg-white px-6 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
+              >
                 ENTER EXPERIENCE
                 <ArrowRight className="h-4 w-4" />
-              </div>
-            </button>
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {entered && (
+      <AnimatePresence>
+        {showSoundPrompt && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/92 px-6"
+          >
+            <div className="absolute inset-0 grain" />
+            <motion.div
+              initial={{ y: 14, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 14, opacity: 0 }}
+              className="relative w-full max-w-xl rounded-[2rem] border border-white/20 bg-black p-6 text-center sm:p-8"
+            >
+              <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
+                AUDIO PREFERENCE
+              </div>
+              <h2 className="mt-3 text-2xl font-black tracking-[0.12em] sm:text-3xl">
+                ENABLE SOUND?
+              </h2>
+              <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75 sm:text-base">
+                The artists have chosen to share their music while you browse. Please
+                select whether you would like audio enabled for this experience.
+              </p>
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                <button
+                  onClick={() => handleSoundChoice(true)}
+                  className="inline-flex items-center justify-center rounded-full border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
+                >
+                  ENABLE SOUND
+                </button>
+                <button
+                  onClick={() => handleSoundChoice(false)}
+                  className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-white"
+                >
+                  CONTINUE WITHOUT SOUND
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {passwordAccepted && entered && (
         <div className="relative min-h-screen overflow-hidden">
           <div className="absolute inset-0 grain" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(255,255,255,0.06),transparent_30%)]" />
@@ -352,10 +461,7 @@ export default function App() {
                     </div>
 
                     <div className="grid place-items-center py-5 sm:py-8">
-                      <div
-                        className="text-[clamp(6rem,20vw,18rem)] font-black leading-none tracking-[-0.06em]"
-                        style={{ animation: "drift 6s ease-in-out infinite" }}
-                      >
+                      <div className="text-[clamp(6rem,20vw,18rem)] font-black leading-none tracking-[-0.06em]">
                         001
                       </div>
                     </div>
@@ -539,9 +645,9 @@ export default function App() {
                       className="h-full w-full object-cover"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
-                        e.currentTarget.parentElement
-                          .querySelector(".fallback-artist")
-                          .style.display = "flex";
+                        const fallback =
+                          e.currentTarget.parentElement.querySelector(".fallback-artist");
+                        if (fallback) fallback.style.display = "flex";
                       }}
                     />
                     <div className="fallback-artist hidden h-full w-full items-center justify-center p-8 text-center text-3xl font-black tracking-[0.2em] text-white/80">
