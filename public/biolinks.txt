@@ -16,17 +16,17 @@ Spotify: "https://open.spotify.com/artist/7EGMz13pJ47ZNjqRPrweKD"
 
 ## SICNTWISTD
 
-Bio: ""
-Instagram: ""
+Bio: "SICNTWISTD has been mining through Birminghams underground scene at his own pace. 1 banger at a time"
+Instagram: "https://www.instagram.com/sicntwistd/"
 SoundCloud: ""
-Spotify: ""
+Spotify: "https://open.spotify.com/artist/4Ef7xSCtkDEOC2ycREyPBq?si=hkiXgmuhQ4ynJDglRgaIvQ"
 
 ---
 
 ## NINENINETEKK
 
-Bio: ""
-Instagram: ""
+Bio: "True underground sound. Consistent and showing 0 signs of slowing down"
+Instagram: "https://www.instagram.com/nineninetekk/"
 SoundCloud: ""
 Spotify: ""
 
@@ -34,10 +34,10 @@ Spotify: ""
 
 ## 10K
 
-Bio: ""
-Instagram: ""
+Bio: "Heavily in motion for a minute now. From London all the way to Birmingham to raise hell"
+Instagram: "https://www.instagram.com/tenflippink/"
 SoundCloud: ""
-Spotify: ""
+Spotify: "https://open.spotify.com/artist/1IAiYEM1Xs3xo0AAHbsbx8?si=L9kgmbbhRPuV4TfHE3_pIQ"
 
 ---
 
