@@ -288,12 +288,12 @@ export default function App() {
   const [soundOn, setSoundOn] = useState(false);
   const [activeTab, setActiveTab] = useState("poster");
   const [artists, setArtists] = useState(BASE_ARTISTS);
-  const [activeArtistKey, setActiveArtistKey] = useState(BASE_ARTISTS[0].key);
+  const [activeArtistKey, setActiveArtistKey] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const audioRef = useRef(null);
 
   const activeArtist = useMemo(
-    () => artists.find((artist) => artist.key === activeArtistKey) || artists[0],
+    () => artists.find((artist) => artist.key === activeArtistKey) || null,
     [artists, activeArtistKey]
   );
 
@@ -344,7 +344,14 @@ export default function App() {
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !activeArtist) return;
+    if (!audio) return;
+
+    if (!activeArtist) {
+      audio.pause();
+      audio.removeAttribute("src");
+      audio.load();
+      return;
+    }
 
     const src = `/${activeArtist.key}.mp3`;
 
@@ -679,7 +686,10 @@ export default function App() {
                         </div>
                       </div>
                       <div className="text-right text-[0.6rem] font-black tracking-[0.4em] text-white/85 sm:text-[0.7rem]">
-                        PMC_001
+                        <div>PMC_001</div>
+                        <div className="mt-1 text-[0.52rem] tracking-[0.32em] text-white/65 sm:text-[0.58rem]">
+                          FOR HIGH ENERGY RAP FANS
+                        </div>
                       </div>
                     </div>
 
@@ -696,7 +706,7 @@ export default function App() {
 
                     <div className="grid gap-3 border-b border-white/80 py-4 text-center sm:py-5">
                       <div className="text-[clamp(1.4rem,4vw,2.9rem)] font-black leading-none tracking-[0.12em]">
-                        DOORS: 6PM
+                        DOORS: 6PM <span className="px-2">|</span> SATURDAY 4TH JULY
                       </div>
                       <div className="text-[clamp(1rem,3vw,2rem)] font-black leading-tight tracking-[0.12em]">
                         20 ARTISTS / 1 NIGHT / BIRMINGHAM
@@ -860,6 +870,7 @@ export default function App() {
                         <div>VENUE: DEADWAX</div>
                         <div>ENTRY: £5</div>
                         <div>DOORS: 6PM</div>
+                        <div>DATE: SATURDAY 4TH JULY</div>
                         <div>BIRMINGHAM</div>
                       </div>
                     </div>
@@ -876,7 +887,7 @@ export default function App() {
                       NOW SHOWING
                     </div>
                     <div className="mt-1 text-2xl font-black tracking-[0.14em]">
-                      {activeArtist?.display}
+                      {activeArtist?.display || "SELECT AN ARTIST"}
                     </div>
                   </div>
 
@@ -894,35 +905,32 @@ export default function App() {
 
                 <div className="mt-4 overflow-hidden border border-white/20 bg-white/5">
                   <div className="aspect-[1/1] w-full overflow-hidden bg-black">
-                    <img
-                      key={activeArtist?.key}
-                      src={`/${activeArtist?.key}.png`}
-                      alt={activeArtist?.display}
-                      className="h-full w-full object-cover"
-                      onLoad={(e) => {
-                        e.currentTarget.style.display = "block";
-                        const fallback =
-                          e.currentTarget.parentElement.querySelector(".fallback-artist");
-                        if (fallback) fallback.style.display = "none";
-                      }}
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                        const fallback =
-                          e.currentTarget.parentElement.querySelector(".fallback-artist");
-                        if (fallback) fallback.style.display = "flex";
-                      }}
-                    />
-
-                    <div className="fallback-artist hidden h-full w-full items-center justify-center p-8 text-center text-3xl font-black tracking-[0.2em] text-white/80">
-                      {activeArtist?.display}
-                    </div>
+                    {activeArtist ? (
+                      <img
+                        key={activeArtist.key}
+                        src={`/${activeArtist.key}.png`}
+                        alt={activeArtist.display}
+                        className="h-full w-full object-cover"
+                        draggable={false}
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center p-8 text-center text-xl font-black leading-relaxed tracking-[0.12em] text-white/80 sm:text-2xl">
+                        CLICK ON AN ARTIST TO HEAR A PREVIEW AND LEARN MORE
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 <div className="mt-4 flex items-center gap-3">
                   <button
                     onClick={togglePlay}
-                    className="inline-flex flex-1 items-center justify-center gap-2 border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black transition hover:scale-[1.01]"
+                    disabled={!activeArtist}
+                    className={cn(
+                      "inline-flex flex-1 items-center justify-center gap-2 border px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] transition",
+                      activeArtist
+                        ? "border-white bg-white text-black hover:scale-[1.01]"
+                        : "cursor-not-allowed border-white/15 bg-white/10 text-white/35"
+                    )}
                   >
                     <Disc3 className="h-4 w-4" />
                     PLAY TRACK
@@ -940,7 +948,8 @@ export default function App() {
                 <div className="mt-4 border border-white/20 p-4">
                   <div className="text-xs font-black tracking-[0.45em] text-white/55">BIO</div>
                   <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/80">
-                    {activeArtist?.bio}
+                    {activeArtist?.bio ||
+                      "Click on an artist to hear a preview, view their image, and learn more about them."}
                   </p>
 
                   {artistLinks.length > 0 && (
