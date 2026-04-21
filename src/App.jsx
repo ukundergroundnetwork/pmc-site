@@ -169,9 +169,7 @@ export default function App() {
     if (entered && soundOn) {
       audio.src = src;
       audio.currentTime = 0;
-      audio.play().catch(() => {
-        // User can manually start playback later if autoplay is blocked.
-      });
+      audio.play().catch(() => {});
     }
   }, [activeArtist, entered, soundOn]);
 
@@ -212,9 +210,7 @@ export default function App() {
       audio.src = `/${activeArtist.key}.mp3`;
       try {
         await audio.play();
-      } catch {
-        // ignore
-      }
+      } catch {}
     } else {
       audio.pause();
     }
@@ -516,17 +512,37 @@ export default function App() {
                     </div>
 
                     <div className="space-y-3 py-4">
-                      <div className="grid gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em]">
+                      <div className="hidden gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em] sm:grid">
                         <ArtistLine
                           artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "10K", "MARLO"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "WMB", "WHOISPDP"]}
+                          artists={["REVIVECHIZL", "KYRXN", "DULL3N", "WHOISPDP"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "DRACOIST", "VELLI"]}
+                          artists={["LONESTAR + NOAH KNIGHT", "WMB", "KAZGETKASH + JVR", "DRACOIST"]}
+                          onSelect={selectArtist}
+                          keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
+                        />
+                        <ArtistLine
+                          artists={["LUVATT + ROMEREO", "VELLI", "BBY GLO", "REZ818"]}
+                          onSelect={selectArtist}
+                        />
+                      </div>
+
+                      <div className="grid gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em] sm:hidden">
+                        <ArtistLine
+                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "10K", "MARLO"]}
+                          onSelect={selectArtist}
+                        />
+                        <ArtistLine
+                          artists={["REVIVECHIZL", "KYRXN", "WHOISPDP", "VELLI"]}
+                          onSelect={selectArtist}
+                        />
+                        <ArtistLine
+                          artists={["LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "WMB", "DRACOIST"]}
                           onSelect={selectArtist}
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
