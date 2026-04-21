@@ -20,6 +20,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "SICNTWISTD",
@@ -28,6 +29,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "NINENINETEKK",
@@ -36,6 +38,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "10K",
@@ -44,6 +47,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "MARLO",
@@ -52,6 +56,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "REVIVECHIZL",
@@ -60,6 +65,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "KYRXN",
@@ -68,6 +74,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "LONESTAR",
@@ -76,6 +83,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "NOAH KNIGHT",
@@ -84,6 +92,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "KAZGETKASH",
@@ -92,6 +101,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "JVR",
@@ -100,6 +110,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center 30%",
   },
   {
     display: "WHOISPDP",
@@ -108,6 +119,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "WMB",
@@ -116,6 +128,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "DRACOIST",
@@ -124,6 +137,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "VELLI",
@@ -132,6 +146,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "LUVATT",
@@ -140,6 +155,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "ROMEREO",
@@ -148,6 +164,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "BBY GLO",
@@ -156,6 +173,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center 28%",
   },
   {
     display: "REZ818",
@@ -164,6 +182,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center 28%",
   },
   {
     display: "DULL3N",
@@ -172,6 +191,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "DJ JACKY P",
@@ -180,6 +200,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "BARTZ",
@@ -188,6 +209,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "DJ 1TAKE",
@@ -196,6 +218,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "DJ SCATTYSOPHIIE",
@@ -204,6 +227,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
   {
     display: "DJ SKI",
@@ -212,6 +236,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
+    imagePosition: "center",
   },
 ];
 
@@ -706,7 +731,8 @@ export default function App() {
 
                     <div className="grid gap-3 border-b border-white/80 py-4 text-center sm:py-5">
                       <div className="text-[clamp(1.4rem,4vw,2.9rem)] font-black leading-none tracking-[0.12em]">
-                        DOORS: 6PM <span className="px-2">|</span> SATURDAY 4TH JULY
+                        <div>DOORS 6PM</div>
+                        <div className="mt-1">SATURDAY 4TH JULY</div>
                       </div>
                       <div className="text-[clamp(1rem,3vw,2rem)] font-black leading-tight tracking-[0.12em]">
                         20 ARTISTS / 1 NIGHT / BIRMINGHAM
@@ -911,6 +937,7 @@ export default function App() {
                         src={`/${activeArtist.key}.png`}
                         alt={activeArtist.display}
                         className="h-full w-full object-cover"
+                        style={{ objectPosition: activeArtist.imagePosition || "center" }}
                         draggable={false}
                       />
                     ) : (
