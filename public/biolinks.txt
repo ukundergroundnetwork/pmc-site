@@ -61,7 +61,7 @@ Spotify: "https://open.spotify.com/artist/4u9eiYZ4gxfGc4VYd2DsfD"
 
 ## KYRXN
 
-Bio: "Kyrxn has a hypnotic sound that reduces any stage he touches to rubble"
+Bio: "Kyrxn has a hypnotic sound that reduces any stage he touches to rubble."
 Instagram: "https://www.instagram.com/kyrxnnn/"
 SoundCloud: "https://soundcloud.com/kyran110503"
 Spotify: "https://open.spotify.com/artist/4qcmpyYLo3SNShJ8DvGfJo?si=SSUwaYBZQoCMzXTAGFfHpA"
@@ -70,7 +70,7 @@ Spotify: "https://open.spotify.com/artist/4qcmpyYLo3SNShJ8DvGfJo?si=SSUwaYBZQoCM
 
 ## LONESTAR
 
-Bio: "LONESTAR is infamous for bringing his insane energy and antics to life during every performance"
+Bio: "LONESTAR is infamous for bringing his insane energy and antics to life during every performance."
 Instagram: "https://www.instagram.com/weloveyoulonestar/"
 SoundCloud: ""
 Spotify: "https://open.spotify.com/artist/0GRn8H5VEQBYnEcvWEjNhe"
