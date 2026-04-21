@@ -13,14 +13,13 @@ git commit -m "%msg%"
 if errorlevel 1 (
   echo.
   echo Commit did not complete.
-  pause
-  exit /b 1
+  echo If Git said there was nothing to commit, that is OK only if you already saved everything.
 )
 
 git pull origin main --rebase
 if errorlevel 1 (
   echo.
-  echo Pull/rebase failed. Resolve it before pushing.
+  echo Pull/rebase failed. Your site was NOT updated.
   pause
   exit /b 1
 )
