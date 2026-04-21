@@ -232,7 +232,7 @@ export default function App() {
           <div className="absolute inset-0 grain" />
           <form
             onSubmit={handlePasswordSubmit}
-            className="relative w-full max-w-md rounded-[2rem] border border-white/20 bg-black/90 p-6 sm:p-8"
+            className="relative w-full max-w-md border border-white/20 bg-black/90 p-6 sm:p-8"
           >
             <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
               PRIVATE ACCESS
@@ -249,7 +249,7 @@ export default function App() {
               value={passwordValue}
               onChange={(e) => setPasswordValue(e.target.value)}
               placeholder="Password"
-              className="mt-6 w-full rounded-full border border-white/20 bg-white/5 px-5 py-4 text-sm tracking-[0.08em] text-white outline-none placeholder:text-white/35 focus:border-white/60"
+              className="mt-6 w-full border border-white/20 bg-white/5 px-5 py-4 text-sm tracking-[0.08em] text-white outline-none placeholder:text-white/35 focus:border-white/60"
             />
 
             {passwordError && (
@@ -258,7 +258,7 @@ export default function App() {
 
             <button
               type="submit"
-              className="mt-6 inline-flex w-full items-center justify-center gap-3 rounded-full border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
+              className="mt-6 inline-flex w-full items-center justify-center gap-3 border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
             >
               CONTINUE
               <ArrowRight className="h-4 w-4" />
@@ -273,46 +273,50 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black px-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black px-5 py-5 sm:px-8 sm:py-8"
           >
             <div className="absolute inset-0 grain" />
 
-            <div className="relative flex w-full max-w-3xl flex-col items-center justify-center text-center">
-              <div className="w-full max-w-[980px]">
-                <img
-                  src="/logo.png"
-                  alt="UK Underground Network logo"
-                  className="mx-auto w-full max-w-[980px] object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    const fallback = e.currentTarget.parentElement.querySelector(".fallback-logo");
-                    if (fallback) fallback.style.display = "block";
-                  }}
-                />
-                <div className="fallback-logo hidden text-[clamp(4rem,16vw,10rem)] font-black tracking-[0.08em] text-white">
-                  UKUGN
+            <div className="relative flex h-full w-full max-w-6xl flex-col items-center justify-center overflow-hidden">
+              <div className="flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-5 sm:gap-6">
+                <div className="flex w-full items-center justify-center">
+                  <img
+                    src="/logo.png"
+                    alt="UK Underground Network logo"
+                    className="mx-auto max-h-[42vh] w-auto max-w-full object-contain sm:max-h-[46vh]"
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                      const fallback = e.currentTarget.parentElement.querySelector(".fallback-logo");
+                      if (fallback) fallback.style.display = "block";
+                    }}
+                  />
+                  <div className="fallback-logo hidden text-[clamp(4rem,16vw,10rem)] font-black tracking-[0.08em] text-white">
+                    UKUGN
+                  </div>
+                </div>
+
+                <div className="w-full max-w-4xl text-center">
+                  <div className="text-[0.65rem] font-black tracking-[0.42em] text-white/75 sm:text-[0.78rem]">
+                    UKUNDERGROUNDNETWORK PRESENTS:
+                  </div>
+
+                  <div className="mt-3 text-[clamp(1.9rem,5vw,4.6rem)] font-black leading-[0.94] tracking-[0.1em]">
+                    PRIVATE MEMBERS CLUB 001
+                  </div>
+
+                  <div className="mt-4 text-[0.72rem] font-black tracking-[0.4em] text-white/75 sm:text-[0.85rem]">
+                    ACCESS: LIMITED
+                  </div>
+
+                  <button
+                    onClick={handleEnterExperience}
+                    className="mt-7 inline-flex items-center gap-3 border border-white bg-white px-6 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
+                  >
+                    ENTER EXPERIENCE
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
-
-              <div className="mt-10 text-[0.7rem] font-black tracking-[0.48em] text-white/75 sm:text-[0.82rem]">
-                UKUNDERGROUNDNETWORK PRESENTS:
-              </div>
-
-              <div className="mt-4 text-[clamp(2rem,7vw,5rem)] font-black leading-[0.92] tracking-[0.12em]">
-                PRIVATE MEMBERS CLUB 001
-              </div>
-
-              <div className="mt-6 text-[0.75rem] font-black tracking-[0.45em] text-white/75 sm:text-sm">
-                ACCESS: LIMITED
-              </div>
-
-              <button
-                onClick={handleEnterExperience}
-                className="mt-10 inline-flex items-center gap-3 rounded-full border border-white bg-white px-6 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
-              >
-                ENTER EXPERIENCE
-                <ArrowRight className="h-4 w-4" />
-              </button>
             </div>
           </motion.div>
         )}
@@ -331,7 +335,7 @@ export default function App() {
               initial={{ y: 14, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 14, opacity: 0 }}
-              className="relative w-full max-w-xl rounded-[2rem] border border-white/20 bg-black p-6 text-center sm:p-8"
+              className="relative w-full max-w-xl border border-white/20 bg-black p-6 text-center sm:p-8"
             >
               <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
                 AUDIO PREFERENCE
@@ -347,13 +351,13 @@ export default function App() {
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 <button
                   onClick={() => handleSoundChoice(true)}
-                  className="inline-flex items-center justify-center rounded-full border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
+                  className="inline-flex items-center justify-center border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
                 >
                   ENABLE SOUND
                 </button>
                 <button
                   onClick={() => handleSoundChoice(false)}
-                  className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-white"
+                  className="inline-flex items-center justify-center border border-white/20 px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-white"
                 >
                   CONTINUE WITHOUT SOUND
                 </button>
@@ -373,7 +377,7 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setMenuOpen((v) => !v)}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/90 md:hidden"
+                  className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white/90 md:hidden"
                   aria-label="Open menu"
                 >
                   {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -395,7 +399,7 @@ export default function App() {
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
                     className={cn(
-                      "rounded-full border px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] transition",
+                      "border px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] transition",
                       activeTab === tab.id
                         ? "border-white bg-white text-black"
                         : "border-white/20 text-white hover:border-white/60"
@@ -406,7 +410,7 @@ export default function App() {
                 ))}
               </div>
 
-              <button className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70">
+              <button className="inline-flex items-center gap-2 border border-white/20 px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70">
                 <ShieldAlert className="h-4 w-4" />
                 ACCESS: LIMITED
               </button>
@@ -422,7 +426,7 @@ export default function App() {
                       setMenuOpen(false);
                     }}
                     className={cn(
-                      "rounded-2xl border px-4 py-3 text-left text-[0.7rem] font-black tracking-[0.35em] transition",
+                      "border px-4 py-3 text-left text-[0.7rem] font-black tracking-[0.35em] transition",
                       activeTab === tab.id
                         ? "border-white bg-white text-black"
                         : "border-white/20 text-white"
@@ -436,7 +440,7 @@ export default function App() {
           </header>
 
           <main className="mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-28 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
-            <section className="relative overflow-hidden rounded-[2rem] border border-white/20 bg-black/85 shadow-2xl shadow-black/50">
+            <section className="relative overflow-hidden border border-white/20 bg-black/85 shadow-2xl shadow-black/50">
               <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05),transparent_18%,transparent_82%,rgba(255,255,255,0.04))]" />
               <div
                 className="absolute inset-0 opacity-70"
@@ -445,7 +449,7 @@ export default function App() {
 
               {activeTab === "poster" && (
                 <div className="relative p-4 sm:p-6">
-                  <div className="rounded-[1.8rem] border border-white/85 p-3 sm:p-4">
+                  <div className="border border-white/85 p-3 sm:p-4">
                     <div className="flex items-start justify-between gap-4 border-b border-white/80 pb-3">
                       <div className="max-w-[62%]">
                         <div className="text-[0.58rem] font-black tracking-[0.55em] text-white/90 sm:text-[0.68rem]">
@@ -520,7 +524,7 @@ export default function App() {
                         key={artist.key}
                         onClick={() => selectArtist(artist.key)}
                         className={cn(
-                          "flex items-center justify-between rounded-2xl border px-4 py-4 text-left transition",
+                          "flex items-center justify-between border px-4 py-4 text-left transition",
                           activeArtistKey === artist.key
                             ? "border-white bg-white text-black"
                             : "border-white/20 bg-white/0 text-white hover:border-white/60"
@@ -564,7 +568,7 @@ export default function App() {
                         desc: "Physical keepsake for the private members set.",
                       },
                     ].map((item) => (
-                      <div key={item.title} className="rounded-[1.4rem] border border-white/20 p-4">
+                      <div key={item.title} className="border border-white/20 p-4">
                         <div className="text-xs font-black tracking-[0.45em] text-white/55">
                           MERCH
                         </div>
@@ -574,7 +578,7 @@ export default function App() {
                         <p className="mt-3 text-sm leading-6 tracking-[0.06em] text-white/75">
                           {item.desc}
                         </p>
-                        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-2 text-[0.65rem] font-black tracking-[0.35em]">
+                        <div className="mt-4 inline-flex items-center gap-2 border border-white/20 px-3 py-2 text-[0.65rem] font-black tracking-[0.35em]">
                           COMING SOON
                         </div>
                       </div>
@@ -587,7 +591,7 @@ export default function App() {
                 <div className="relative p-4 sm:p-6">
                   <SectionTitle eyebrow="ABOUT US" title="PRIVATE MEMBERS CLUB™" />
                   <div className="mt-5 grid gap-4 lg:grid-cols-2">
-                    <div className="rounded-[1.4rem] border border-white/20 p-5">
+                    <div className="border border-white/20 p-5">
                       <div className="text-xs font-black tracking-[0.45em] text-white/55">
                         MANIFESTO
                       </div>
@@ -597,7 +601,7 @@ export default function App() {
                         the lineup, and jump straight into the artists.
                       </p>
                     </div>
-                    <div className="rounded-[1.4rem] border border-white/20 p-5">
+                    <div className="border border-white/20 p-5">
                       <div className="text-xs font-black tracking-[0.45em] text-white/55">
                         EVENT INFO
                       </div>
@@ -614,7 +618,7 @@ export default function App() {
             </section>
 
             <aside className="relative flex flex-col gap-4">
-              <div className="rounded-[2rem] border border-white/20 bg-black/85 p-4 shadow-2xl shadow-black/50">
+              <div className="border border-white/20 bg-black/85 p-4 shadow-2xl shadow-black/50">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
@@ -628,7 +632,7 @@ export default function App() {
                   <button
                     onClick={() => setSoundOn((v) => !v)}
                     className={cn(
-                      "inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[0.65rem] font-black tracking-[0.3em] transition",
+                      "inline-flex items-center gap-2 border px-3 py-2 text-[0.65rem] font-black tracking-[0.3em] transition",
                       soundOn ? "border-white bg-white text-black" : "border-white/20 text-white"
                     )}
                   >
@@ -637,7 +641,7 @@ export default function App() {
                   </button>
                 </div>
 
-                <div className="mt-4 overflow-hidden rounded-[1.6rem] border border-white/20 bg-white/5">
+                <div className="mt-4 overflow-hidden border border-white/20 bg-white/5">
                   <div className="aspect-[1/1] w-full overflow-hidden bg-black">
                     <img
                       src={`/${activeArtist.key}.png`}
@@ -659,7 +663,7 @@ export default function App() {
                 <div className="mt-4 flex items-center gap-3">
                   <button
                     onClick={togglePlay}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black transition hover:scale-[1.01]"
+                    className="inline-flex flex-1 items-center justify-center gap-2 border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black transition hover:scale-[1.01]"
                   >
                     <Disc3 className="h-4 w-4" />
                     PLAY TRACK
@@ -667,14 +671,14 @@ export default function App() {
 
                   <button
                     onClick={() => setActiveTab("lineup")}
-                    className="inline-flex items-center justify-center rounded-full border border-white/20 p-3 text-white transition hover:border-white/70"
+                    className="inline-flex items-center justify-center border border-white/20 p-3 text-white transition hover:border-white/70"
                     aria-label="Open lineup"
                   >
                     <Menu className="h-5 w-5" />
                   </button>
                 </div>
 
-                <div className="mt-4 rounded-[1.4rem] border border-white/20 p-4">
+                <div className="mt-4 border border-white/20 p-4">
                   <div className="text-xs font-black tracking-[0.45em] text-white/55">BIO</div>
                   <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/80">
                     {activeArtist.bio}
@@ -689,7 +693,7 @@ export default function App() {
                         key={link.label}
                         href={link.href}
                         onClick={(e) => e.preventDefault()}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-2 text-[0.62rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70"
+                        className="inline-flex items-center gap-2 border border-white/20 px-3 py-2 text-[0.62rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70"
                       >
                         {link.label}
                         <ExternalLink className="h-3 w-3" />
@@ -699,7 +703,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="hidden rounded-[2rem] border border-white/20 bg-black/85 p-4 lg:block">
+              <div className="hidden border border-white/20 bg-black/85 p-4 lg:block">
                 <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
                   TICKET LAYER
                 </div>
@@ -708,7 +712,7 @@ export default function App() {
                   Keep the ticket action always visible. This button can later connect to your
                   ticket provider or external checkout.
                 </p>
-                <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black">
+                <button className="mt-4 inline-flex w-full items-center justify-center gap-2 border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black">
                   <Ticket className="h-4 w-4" />
                   GET ACCESS
                 </button>
@@ -716,7 +720,7 @@ export default function App() {
             </aside>
           </main>
 
-          <button className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-full border border-white bg-white px-5 py-3 text-[0.7rem] font-black tracking-[0.4em] text-black shadow-2xl shadow-black/40 md:hidden">
+          <button className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 border border-white bg-white px-5 py-3 text-[0.7rem] font-black tracking-[0.4em] text-black shadow-2xl shadow-black/40 md:hidden">
             GET ACCESS · £5
           </button>
         </div>
