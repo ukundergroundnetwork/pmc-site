@@ -12,132 +12,206 @@ import {
 
 const ACCESS_PASSWORD = "ukugn2";
 
-const ARTISTS = [
+const BASE_ARTISTS = [
   {
     display: "THATICEKIDD",
     key: "thaticekidd",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "SICNTWISTD",
     key: "sicntwistd",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "NINENINETEKK",
     key: "nineninetekk",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "10K",
     key: "10k",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "MARLO",
     key: "marlo",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "REVIVECHIZL",
     key: "revivechizl",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "KYRXN",
     key: "kyrxn",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "LONESTAR",
     key: "lonestar",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "NOAH KNIGHT",
     key: "noahknight",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "KAZGETKASH",
     key: "kazgetkash",
     bio: "Joint-act demo page. Replace this with an individual bio for KAZGETKASH.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "JVR",
     key: "jvr",
     bio: "Joint-act demo page. Replace this with an individual bio for JVR.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "WHOISPDP",
     key: "whoispdp",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "WMB",
     key: "wmb",
     bio: "High-energy demo placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "DRACOIST",
     key: "dracoist",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "VELLI",
     key: "velli",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "LUVATT",
     key: "luvatt",
     bio: "Joint-act demo page. Replace this with an individual bio for LUVATT.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "ROMEREO",
     key: "romereo",
     bio: "Joint-act demo page. Replace this with an individual bio for ROMEREO.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "BBY GLO",
     key: "bbyglo",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "REZ818",
     key: "rez818",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "DULL3N",
     key: "dull3n",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
-
   {
     display: "DJ JACKY P",
     key: "djjackyp",
     bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ JACKY P.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "BARTZ",
     key: "bartz",
     bio: "DJ bio placeholder. Replace this with a short 2–4 line description for BARTZ.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "DJ 1TAKE",
     key: "dj1take",
     bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ 1TAKE.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "DJ SCATTYSOPHIIE",
     key: "djscattysophiie",
     bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ SCATTYSOPHIIE.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
   {
     display: "DJ SKI",
     key: "djski",
     bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ SKI.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
   },
 ];
 
@@ -152,6 +226,59 @@ function cn(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+function cleanValue(value = "") {
+  return value.replace(/^"(.*)"$/, "$1").trim();
+}
+
+function parseBioLinks(text) {
+  const sections = text
+    .split(/^##\s+/m)
+    .map((section) => section.trim())
+    .filter(Boolean);
+
+  const parsed = {};
+
+  for (const section of sections) {
+    const lines = section
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (!lines.length) continue;
+
+    const name = lines[0];
+    if (!name || name.toLowerCase() === "notes" || name.toLowerCase() === "djs") {
+      continue;
+    }
+
+    let bio = "";
+    let instagram = "";
+    let soundcloud = "";
+    let spotify = "";
+
+    for (const line of lines.slice(1)) {
+      if (line.startsWith("Bio:")) {
+        bio = cleanValue(line.replace(/^Bio:\s*/, ""));
+      } else if (line.startsWith("Instagram:")) {
+        instagram = cleanValue(line.replace(/^Instagram:\s*/, ""));
+      } else if (line.startsWith("SoundCloud:")) {
+        soundcloud = cleanValue(line.replace(/^SoundCloud:\s*/, ""));
+      } else if (line.startsWith("Spotify:")) {
+        spotify = cleanValue(line.replace(/^Spotify:\s*/, ""));
+      }
+    }
+
+    parsed[name.toLowerCase()] = {
+      bio,
+      instagram,
+      soundcloud,
+      spotify,
+    };
+  }
+
+  return parsed;
+}
+
 export default function App() {
   const [passwordValue, setPasswordValue] = useState("");
   const [passwordAccepted, setPasswordAccepted] = useState(false);
@@ -160,14 +287,47 @@ export default function App() {
   const [showExperiencePrompt, setShowExperiencePrompt] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
   const [activeTab, setActiveTab] = useState("poster");
-  const [activeArtistKey, setActiveArtistKey] = useState(ARTISTS[0].key);
+  const [artists, setArtists] = useState(BASE_ARTISTS);
+  const [activeArtistKey, setActiveArtistKey] = useState(BASE_ARTISTS[0].key);
   const [menuOpen, setMenuOpen] = useState(false);
   const audioRef = useRef(null);
 
   const activeArtist = useMemo(
-    () => ARTISTS.find((artist) => artist.key === activeArtistKey) || ARTISTS[0],
-    [activeArtistKey]
+    () => artists.find((artist) => artist.key === activeArtistKey) || artists[0],
+    [artists, activeArtistKey]
   );
+
+  useEffect(() => {
+    async function loadBioLinks() {
+      try {
+        const response = await fetch("/biolinks.txt");
+        if (!response.ok) {
+          throw new Error(`Failed to fetch biolinks.txt: ${response.status}`);
+        }
+
+        const text = await response.text();
+        const parsed = parseBioLinks(text);
+
+        const mergedArtists = BASE_ARTISTS.map((artist) => {
+          const entry = parsed[artist.display.toLowerCase()] || {};
+
+          return {
+            ...artist,
+            bio: entry.bio || artist.bio,
+            instagram: entry.instagram || "",
+            soundcloud: entry.soundcloud || "",
+            spotify: entry.spotify || "",
+          };
+        });
+
+        setArtists(mergedArtists);
+      } catch (error) {
+        console.error("Could not load biolinks.txt", error);
+      }
+    }
+
+    loadBioLinks();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflowX = "hidden";
@@ -184,7 +344,7 @@ export default function App() {
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !activeArtist) return;
 
     const src = `/${activeArtist.key}.mp3`;
 
@@ -229,7 +389,7 @@ export default function App() {
 
   const togglePlay = async () => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !activeArtist) return;
 
     if (audio.paused) {
       setSoundOn(true);
@@ -241,6 +401,15 @@ export default function App() {
       audio.pause();
     }
   };
+
+  const artistLinks = [
+    { label: "INSTAGRAM", href: activeArtist?.instagram },
+    { label: "SOUNDCLOUD", href: activeArtist?.soundcloud },
+    { label: "SPOTIFY", href: activeArtist?.spotify },
+  ].filter((link) => {
+    const value = (link.href || "").trim().toLowerCase();
+    return value && value !== "none" && value !== "#";
+  });
 
   return (
     <div
@@ -601,7 +770,7 @@ export default function App() {
                 <div className="relative p-4 sm:p-6">
                   <SectionTitle eyebrow="LINEUP INDEX" title="SELECT AN ARTIST OR DJ" />
                   <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {ARTISTS.map((artist) => (
+                    {artists.map((artist) => (
                       <button
                         key={artist.key}
                         onClick={() => selectArtist(artist.key)}
@@ -707,7 +876,7 @@ export default function App() {
                       NOW SHOWING
                     </div>
                     <div className="mt-1 text-2xl font-black tracking-[0.14em]">
-                      {activeArtist.display}
+                      {activeArtist?.display}
                     </div>
                   </div>
 
@@ -726,8 +895,8 @@ export default function App() {
                 <div className="mt-4 overflow-hidden border border-white/20 bg-white/5">
                   <div className="aspect-[1/1] w-full overflow-hidden bg-black">
                     <img
-                      src={`/${activeArtist.key}.png`}
-                      alt={activeArtist.display}
+                      src={`/${activeArtist?.key}.png`}
+                      alt={activeArtist?.display}
                       className="h-full w-full object-cover"
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
@@ -737,7 +906,7 @@ export default function App() {
                       }}
                     />
                     <div className="fallback-artist hidden h-full w-full items-center justify-center p-8 text-center text-3xl font-black tracking-[0.2em] text-white/80">
-                      {activeArtist.display}
+                      {activeArtist?.display}
                     </div>
                   </div>
                 </div>
@@ -763,25 +932,25 @@ export default function App() {
                 <div className="mt-4 border border-white/20 p-4">
                   <div className="text-xs font-black tracking-[0.45em] text-white/55">BIO</div>
                   <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/80">
-                    {activeArtist.bio}
+                    {activeArtist?.bio}
                   </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {[
-                      { label: "INSTAGRAM", href: "#" },
-                      { label: "SOUNDCLOUD", href: "#" },
-                      { label: "SPOTIFY", href: "#" },
-                    ].map((link) => (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        onClick={(e) => e.preventDefault()}
-                        className="inline-flex items-center gap-2 border border-white/20 px-3 py-2 text-[0.62rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70"
-                      >
-                        {link.label}
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
-                    ))}
-                  </div>
+
+                  {artistLinks.length > 0 && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {artistLinks.map((link) => (
+                        <a
+                          key={link.label}
+                          href={link.href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 border border-white/20 px-3 py-2 text-[0.62rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70"
+                        >
+                          {link.label}
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
 
