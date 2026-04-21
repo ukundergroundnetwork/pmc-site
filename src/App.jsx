@@ -431,7 +431,7 @@ export default function App() {
                     UKUNDERGROUNDNETWORK
                   </div>
                   <div className="truncate text-lg font-black tracking-[0.24em]">
-                    PRIVATE MEMBERS CLUB
+                    PRIVATE MEMBERS CLUB 001
                   </div>
                 </div>
               </div>
@@ -553,11 +553,11 @@ export default function App() {
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
                         <ArtistLine
-                          artists={["LUVATT + ROMEREO", "WHOISPDP", "VELLI"]}
+                          artists={["LUVATT + ROMEREO", "WHOISPDP"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["BBY GLO", "REZ818"]}
+                          artists={["BBY GLO", "REZ818", "VELLI"]}
                           onSelect={selectArtist}
                         />
                       </div>
