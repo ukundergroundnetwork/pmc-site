@@ -6,7 +6,6 @@ import {
   ExternalLink,
   Menu,
   Music2,
-  ShieldAlert,
   Ticket,
   X,
 } from "lucide-react";
@@ -25,8 +24,8 @@ const ARTISTS = [
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
   },
   {
-    display: "NINE PRIEST",
-    key: "ninepriest",
+    display: "NINENINETEKK",
+    key: "nineninetekk",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
   },
   {
@@ -60,9 +59,14 @@ const ARTISTS = [
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
   },
   {
-    display: "KAZGETKASH + JVR",
+    display: "KAZGETKASH",
     key: "kazgetkash",
-    bio: "Joint-act demo page. Use the first name for image/audio files: kazgetkash.png and kazgetkash.mp3.",
+    bio: "Joint-act demo page. Replace this with an individual bio for KAZGETKASH.",
+  },
+  {
+    display: "JVR",
+    key: "jvr",
+    bio: "Joint-act demo page. Replace this with an individual bio for JVR.",
   },
   {
     display: "WHOISPDP",
@@ -85,9 +89,14 @@ const ARTISTS = [
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
   },
   {
-    display: "LUVATT + ROMEREO",
+    display: "LUVATT",
     key: "luvatt",
-    bio: "Joint-act demo page. Use the first name for image/audio files: luvatt.png and luvatt.mp3.",
+    bio: "Joint-act demo page. Replace this with an individual bio for LUVATT.",
+  },
+  {
+    display: "ROMEREO",
+    key: "romereo",
+    bio: "Joint-act demo page. Replace this with an individual bio for ROMEREO.",
   },
   {
     display: "BBY GLO",
@@ -123,6 +132,7 @@ export default function App() {
   const [passwordError, setPasswordError] = useState("");
   const [entered, setEntered] = useState(false);
   const [showSoundPrompt, setShowSoundPrompt] = useState(false);
+  const [showPosterHint, setShowPosterHint] = useState(true);
   const [soundOn, setSoundOn] = useState(false);
   const [activeTab, setActiveTab] = useState("poster");
   const [activeArtistKey, setActiveArtistKey] = useState(ARTISTS[0].key);
@@ -135,9 +145,15 @@ export default function App() {
   );
 
   useEffect(() => {
-    document.body.style.overflow = passwordAccepted && entered ? "" : "hidden";
+    document.body.style.overflowX = "hidden";
+    document.documentElement.style.overflowX = "hidden";
+    document.body.style.overflowY = passwordAccepted && entered ? "auto" : "hidden";
+
     return () => {
       document.body.style.overflow = "";
+      document.body.style.overflowX = "";
+      document.body.style.overflowY = "";
+      document.documentElement.style.overflowX = "";
     };
   }, [passwordAccepted, entered]);
 
@@ -207,11 +223,15 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen bg-black text-white antialiased"
+      className="min-h-screen overflow-x-hidden bg-black text-white antialiased"
       style={{ fontFamily: '"Oswald", sans-serif' }}
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+        html, body, #root {
+          max-width: 100%;
+          overflow-x: hidden;
+        }
         @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .9; } 52% { opacity: .98; } }
         .grain {
           background-image:
@@ -367,33 +387,75 @@ export default function App() {
         )}
       </AnimatePresence>
 
+      <AnimatePresence>
+        {passwordAccepted && entered && showPosterHint && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[55] flex items-center justify-center bg-black/88 px-6"
+          >
+            <div className="absolute inset-0 grain" />
+            <motion.div
+              initial={{ y: 14, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 14, opacity: 0 }}
+              className="relative w-full max-w-xl border border-white/20 bg-black p-6 text-center sm:p-8"
+            >
+              <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
+                QUICK NOTE
+              </div>
+              <h2 className="mt-3 text-2xl font-black tracking-[0.12em] sm:text-3xl">
+                INTERACTIVE LINEUP
+              </h2>
+              <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75 sm:text-base">
+                Click any artist name on the poster to preview their music, view their
+                bio, and access their artist links.
+              </p>
+
+              <button
+                onClick={() => setShowPosterHint(false)}
+                className="mt-8 inline-flex items-center justify-center border border-white bg-white px-6 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
+              >
+                CONFIRM
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {passwordAccepted && entered && (
-        <div className="relative min-h-screen overflow-hidden">
+        <div className="relative min-h-screen overflow-x-hidden">
           <div className="absolute inset-0 grain" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(255,255,255,0.06),transparent_30%)]" />
 
           <header className="sticky top-0 z-40 border-b border-white/20 bg-black/90 backdrop-blur-sm">
             <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-              <div className="flex items-center gap-3">
+              <div className="flex min-w-0 items-center gap-3">
                 <button
                   onClick={() => setMenuOpen((v) => !v)}
-                  className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white/90 md:hidden"
+                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/20 text-white/90 md:hidden"
                   aria-label="Open menu"
                 >
                   {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                 </button>
 
-                <div>
-                  <div className="text-[0.64rem] font-bold tracking-[0.55em] text-white/70">
+                <div className="min-w-0">
+                  <div className="truncate text-[0.64rem] font-bold tracking-[0.42em] text-white/70">
                     UKUNDERGROUNDNETWORK
                   </div>
-                  <div className="text-lg font-black tracking-[0.32em]">
+                  <div className="truncate text-lg font-black tracking-[0.24em]">
                     PRIVATE MEMBERS CLUB
                   </div>
                 </div>
               </div>
 
               <div className="hidden items-center gap-2 md:flex">
+                <button className="inline-flex items-center gap-2 border border-white bg-white px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] text-black">
+                  <Ticket className="h-4 w-4" />
+                  GET ACCESS
+                </button>
+
                 {TABS.map((tab) => (
                   <button
                     key={tab.id}
@@ -409,11 +471,6 @@ export default function App() {
                   </button>
                 ))}
               </div>
-
-              <button className="inline-flex items-center gap-2 border border-white/20 px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70">
-                <ShieldAlert className="h-4 w-4" />
-                ACCESS: LIMITED
-              </button>
             </div>
 
             <div className={cn("md:hidden", menuOpen ? "block" : "hidden")}>
@@ -490,11 +547,11 @@ export default function App() {
                     <div className="space-y-3 py-4">
                       <div className="grid gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em]">
                         <ArtistLine
-                          artists={["THATICEKIDD", "SICNTWISTD", "NINE PRIEST", "10K", "MARLO"]}
+                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "10K", "MARLO"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "LONESTAR", "NOAH KNIGHT"]}
+                          artists={["REVIVECHIZL", "KYRXN", "LONESTAR + NOAH KNIGHT"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
@@ -742,43 +799,67 @@ function ArtistLine({ artists, onSelect }) {
   return (
     <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
       {artists.map((name, index) => {
-        const key = name.replace(/\s|\+|™|\.|,/g, "").toLowerCase();
+        const normalized = name.toLowerCase();
 
         return (
-          <button
-            key={`${name}-${index}`}
-            onClick={() => {
-              const normalized = name.toLowerCase();
-              if (normalized.includes("kazgetkash")) return onSelect("kazgetkash");
-              if (normalized.includes("luvatt")) return onSelect("luvatt");
-
-              const mapping = {
-                thaticekidd: "thaticekidd",
-                sicntwistd: "sicntwistd",
-                "nine priest": "ninepriest",
-                "10k": "10k",
-                marlo: "marlo",
-                revivechizl: "revivechizl",
-                kyrxn: "kyrxn",
-                lonestar: "lonestar",
-                "noah knight": "noahknight",
-                whoispdp: "whoispdp",
-                wmb: "wmb",
-                dracoist: "dracoist",
-                velli: "velli",
-                "bby glo": "bbyglo",
-                rez818: "rez818",
-                dull3n: "dull3n",
-              };
-
-              onSelect(mapping[normalized] || key);
-            }}
-            className="transition hover:opacity-70"
-          >
-            {name}
-          </button>
+          <React.Fragment key={`${name}-${index}`}>
+            {normalized.includes(" + ") ? (
+              <>
+                {name.split(" + ").map((part, partIndex, arr) => {
+                  const displayName = part.trim();
+                  return (
+                    <React.Fragment key={`${displayName}-${partIndex}`}>
+                      <button
+                        onClick={() => onSelect(mapArtistNameToKey(displayName))}
+                        className="transition hover:opacity-70"
+                      >
+                        {displayName}
+                      </button>
+                      {partIndex < arr.length - 1 && <span>+</span>}
+                    </React.Fragment>
+                  );
+                })}
+              </>
+            ) : (
+              <button
+                onClick={() => onSelect(mapArtistNameToKey(name))}
+                className="transition hover:opacity-70"
+              >
+                {name}
+              </button>
+            )}
+          </React.Fragment>
         );
       })}
     </div>
   );
+}
+
+function mapArtistNameToKey(name) {
+  const normalized = name.toLowerCase().trim();
+
+  const mapping = {
+    thaticekidd: "thaticekidd",
+    sicntwistd: "sicntwistd",
+    nineninetekk: "nineninetekk",
+    "10k": "10k",
+    marlo: "marlo",
+    revivechizl: "revivechizl",
+    kyrxn: "kyrxn",
+    lonestar: "lonestar",
+    "noah knight": "noahknight",
+    kazgetkash: "kazgetkash",
+    jvr: "jvr",
+    whoispdp: "whoispdp",
+    wmb: "wmb",
+    dracoist: "dracoist",
+    velli: "velli",
+    luvatt: "luvatt",
+    romereo: "romereo",
+    "bby glo": "bbyglo",
+    rez818: "rez818",
+    dull3n: "dull3n",
+  };
+
+  return mapping[normalized] || normalized.replace(/\s|\+|™|\.|,/g, "");
 }
