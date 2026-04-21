@@ -1,0 +1,674 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  Disc3,
+  ExternalLink,
+  Menu,
+  Music2,
+  ShieldAlert,
+  Ticket,
+  X,
+} from "lucide-react";
+
+const ARTISTS = [
+  {
+    display: "THATICEKIDD",
+    key: "thaticekidd",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "SICNTWISTD",
+    key: "sicntwistd",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "NINE PRIEST",
+    key: "ninepriest",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "10K",
+    key: "10k",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "MARLO",
+    key: "marlo",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "REVIVECHIZL",
+    key: "revivechizl",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "KYRXN",
+    key: "kyrxn",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "LONESTAR",
+    key: "lonestar",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "NOAH KNIGHT",
+    key: "noahknight",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "KAZGETKASH + JVR",
+    key: "kazgetkash",
+    bio: "Joint-act demo page. Use the first name for image/audio files: kazgetkash.png and kazgetkash.mp3.",
+  },
+  {
+    display: "WHOISPDP",
+    key: "whoispdp",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "WMB",
+    key: "wmb",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "DRACOIST",
+    key: "dracoist",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "VELLI",
+    key: "velli",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "LUVATT + ROMEREO",
+    key: "luvatt",
+    bio: "Joint-act demo page. Use the first name for image/audio files: luvatt.png and luvatt.mp3.",
+  },
+  {
+    display: "BBY GLO",
+    key: "bbyglo",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "REZ818",
+    key: "rez818",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+  {
+    display: "DULL3N",
+    key: "dull3n",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+  },
+];
+
+const TABS = [
+  { id: "poster", label: "POSTER" },
+  { id: "lineup", label: "LINEUP" },
+  { id: "merch", label: "MERCH" },
+  { id: "about", label: "ABOUT US" },
+];
+
+function cn(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+export default function App() {
+  const [entered, setEntered] = useState(false);
+  const [soundOn, setSoundOn] = useState(true);
+  const [activeTab, setActiveTab] = useState("poster");
+  const [activeArtistKey, setActiveArtistKey] = useState(ARTISTS[0].key);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const audioRef = useRef(null);
+
+  const activeArtist = useMemo(
+    () => ARTISTS.find((artist) => artist.key === activeArtistKey) || ARTISTS[0],
+    [activeArtistKey]
+  );
+
+  useEffect(() => {
+    document.body.style.overflow = entered ? "" : "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [entered]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const src = `/${activeArtist.key}.mp3`;
+    const hasAudio = !!activeArtist.key;
+
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
+
+    if (entered && soundOn && hasAudio) {
+      audio.src = src;
+      audio.currentTime = 0;
+      audio.play().catch(() => {
+        // Browsers may block autoplay; user can press play in the panel.
+      });
+    }
+  }, [activeArtist, entered, soundOn]);
+
+  const selectArtist = (key) => {
+    setActiveArtistKey(key);
+    setActiveTab("poster");
+    setMenuOpen(false);
+  };
+
+  const togglePlay = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      audio.src = `/${activeArtist.key}.mp3`;
+      try {
+        await audio.play();
+      } catch {
+        // ignore
+      }
+    } else {
+      audio.pause();
+    }
+  };
+
+  return (
+    <div
+      className="min-h-screen bg-black text-white antialiased"
+      style={{ fontFamily: '"Oswald", sans-serif' }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
+        @keyframes slowSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .88; } 52% { opacity: .98; } }
+        @keyframes drift { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+        .grain {
+          background-image:
+            radial-gradient(rgba(255,255,255,0.09) 1px, transparent 1px),
+            radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+          background-size: 3px 3px, 7px 7px;
+          background-position: 0 0, 1px 1px;
+          mix-blend-mode: screen;
+          opacity: .08;
+          pointer-events: none;
+        }
+        .poster-border { border-color: rgba(255,255,255,.9); }
+      `}</style>
+
+      <audio ref={audioRef} preload="none" />
+
+      <AnimatePresence>
+        {!entered && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black px-6"
+          >
+            <div className="absolute inset-0 grain" />
+            <button
+              onClick={() => setEntered(true)}
+              className="relative flex w-full max-w-md flex-col items-center justify-center gap-6 text-center"
+            >
+              <div className="relative h-56 w-56 sm:h-64 sm:w-64">
+                <img
+                  src="/logo.png"
+                  alt="PMC logo"
+                  className="h-full w-full object-contain"
+                  style={{ animation: "slowSpin 10s linear infinite" }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    e.currentTarget.parentElement
+                      .querySelector(".fallback-logo")
+                      .style.display = "flex";
+                  }}
+                />
+                <div
+                  className="fallback-logo hidden h-full w-full items-center justify-center rounded-full border border-white/70 text-3xl font-black tracking-[0.35em]"
+                  style={{ animation: "slowSpin 10s linear infinite" }}
+                >
+                  PMC
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="text-[clamp(2rem,7vw,4.5rem)] font-black leading-none tracking-[0.18em]">
+                  PRIVATE MEMBERS CLUB
+                </div>
+                <div className="text-xs font-bold tracking-[0.5em] text-white/80 sm:text-sm">
+                  ACCESS: LIMITED
+                </div>
+              </div>
+
+              <div className="mt-2 flex items-center gap-3 rounded-full border border-white/70 px-5 py-3 text-xs font-bold tracking-[0.28em] sm:text-sm">
+                ENTER EXPERIENCE
+                <ArrowRight className="h-4 w-4" />
+              </div>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {entered && (
+        <div className="relative min-h-screen overflow-hidden">
+          <div className="absolute inset-0 grain" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(255,255,255,0.06),transparent_30%)]" />
+
+          <header className="sticky top-0 z-40 border-b border-white/20 bg-black/90 backdrop-blur-sm">
+            <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setMenuOpen((v) => !v)}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white/90 md:hidden"
+                  aria-label="Open menu"
+                >
+                  {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                </button>
+
+                <div>
+                  <div className="text-[0.64rem] font-bold tracking-[0.55em] text-white/70">
+                    UKUNDERGROUNDNETWORK
+                  </div>
+                  <div className="text-lg font-black tracking-[0.32em]">
+                    PRIVATE MEMBERS CLUB
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden items-center gap-2 md:flex">
+                {TABS.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={cn(
+                      "rounded-full border px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] transition",
+                      activeTab === tab.id
+                        ? "border-white bg-white text-black"
+                        : "border-white/20 text-white hover:border-white/60"
+                    )}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              <button className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70">
+                <ShieldAlert className="h-4 w-4" />
+                ACCESS: LIMITED
+              </button>
+            </div>
+
+            <div className={cn("md:hidden", menuOpen ? "block" : "hidden")}>
+              <div className="mx-auto grid max-w-7xl grid-cols-2 gap-2 px-4 pb-4 sm:px-6">
+                {TABS.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      setMenuOpen(false);
+                    }}
+                    className={cn(
+                      "rounded-2xl border px-4 py-3 text-left text-[0.7rem] font-black tracking-[0.35em] transition",
+                      activeTab === tab.id
+                        ? "border-white bg-white text-black"
+                        : "border-white/20 text-white"
+                    )}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </header>
+
+          <main className="mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-28 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
+            <section className="relative overflow-hidden rounded-[2rem] border border-white/20 bg-black/85 shadow-2xl shadow-black/50">
+              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05),transparent_18%,transparent_82%,rgba(255,255,255,0.04))]" />
+              <div
+                className="absolute inset-0 opacity-70"
+                style={{ animation: "softFlicker 7s infinite" }}
+              />
+
+              {activeTab === "poster" && (
+                <div className="relative p-4 sm:p-6">
+                  <div className="rounded-[1.8rem] border border-white/85 p-3 sm:p-4">
+                    <div className="flex items-start justify-between gap-4 border-b border-white/80 pb-3">
+                      <div className="max-w-[62%]">
+                        <div className="text-[0.58rem] font-black tracking-[0.55em] text-white/90 sm:text-[0.68rem]">
+                          UKUNDERGROUNDNETWORK PRESENTS
+                        </div>
+                        <div className="mt-1 text-[clamp(1.4rem,4vw,2.8rem)] font-black leading-[0.9] tracking-[0.12em]">
+                          PRIVATE MEMBERS CLUB™
+                        </div>
+                      </div>
+                      <div className="text-right text-[0.6rem] font-black tracking-[0.4em] text-white/85 sm:text-[0.7rem]">
+                        PMC_001
+                      </div>
+                    </div>
+
+                    <div className="grid place-items-center py-5 sm:py-8">
+                      <div
+                        className="text-[clamp(6rem,20vw,18rem)] font-black leading-none tracking-[-0.06em]"
+                        style={{ animation: "drift 6s ease-in-out infinite" }}
+                      >
+                        001
+                      </div>
+                    </div>
+
+                    <div className="border-y border-white/80 py-3 text-center text-[0.7rem] font-black tracking-[0.38em] sm:text-[0.82rem]">
+                      ACCESS: LIMITED <span className="px-2">|</span> ENTRY: £5{" "}
+                      <span className="px-2">|</span> LOCATION: DEADWAX
+                    </div>
+
+                    <div className="grid gap-3 border-b border-white/80 py-4 text-center sm:py-5">
+                      <div className="text-[clamp(1.4rem,4vw,2.9rem)] font-black leading-none tracking-[0.12em]">
+                        DOORS: 6PM
+                      </div>
+                      <div className="text-[clamp(1rem,3vw,2rem)] font-black leading-tight tracking-[0.12em]">
+                        20 ARTISTS / 1 NIGHT / BIRMINGHAM
+                      </div>
+                      <div className="text-[clamp(1rem,3vw,1.9rem)] font-black leading-tight tracking-[0.12em]">
+                        + VERY SPECIAL GUESTS
+                      </div>
+                    </div>
+
+                    <div className="space-y-3 py-4">
+                      <div className="grid gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em]">
+                        <ArtistLine
+                          artists={["THATICEKIDD", "SICNTWISTD", "NINE PRIEST", "10K", "MARLO"]}
+                          onSelect={selectArtist}
+                        />
+                        <ArtistLine
+                          artists={["REVIVECHIZL", "KYRXN", "LONESTAR", "NOAH KNIGHT"]}
+                          onSelect={selectArtist}
+                        />
+                        <ArtistLine
+                          artists={["KAZGETKASH + JVR", "WHOISPDP", "WMB", "DRACOIST", "VELLI"]}
+                          onSelect={selectArtist}
+                        />
+                        <ArtistLine
+                          artists={["LUVATT + ROMEREO", "BBY GLO", "REZ818", "DULL3N"]}
+                          onSelect={selectArtist}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="border-t border-white/80 pt-3 text-center text-[0.62rem] font-black tracking-[0.35em] text-white/90 sm:text-[0.72rem]">
+                      SOUNDS BY DJ JACKY P, BARTZ, DJ 1TAKE, DJ SCATTYSOPHIIE, DJ SKI
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "lineup" && (
+                <div className="relative p-4 sm:p-6">
+                  <SectionTitle eyebrow="LINEUP INDEX" title="SELECT AN ARTIST" />
+                  <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    {ARTISTS.map((artist) => (
+                      <button
+                        key={artist.key}
+                        onClick={() => selectArtist(artist.key)}
+                        className={cn(
+                          "flex items-center justify-between rounded-2xl border px-4 py-4 text-left transition",
+                          activeArtistKey === artist.key
+                            ? "border-white bg-white text-black"
+                            : "border-white/20 bg-white/0 text-white hover:border-white/60"
+                        )}
+                      >
+                        <div>
+                          <div
+                            className={cn(
+                              "text-[0.68rem] font-black tracking-[0.45em]",
+                              activeArtistKey === artist.key ? "text-black/50" : "text-white/55"
+                            )}
+                          >
+                            ARTIST
+                          </div>
+                          <div className="mt-1 text-xl font-black tracking-[0.12em]">
+                            {artist.display}
+                          </div>
+                        </div>
+                        <ArrowRight className="h-5 w-5" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "merch" && (
+                <div className="relative p-4 sm:p-6">
+                  <SectionTitle eyebrow="MERCH" title="LIMITED RUN" />
+                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                    {[
+                      {
+                        title: "PMC TEE",
+                        desc: "Heavyweight black tee with stacked white print.",
+                      },
+                      {
+                        title: "POSTER PRINT",
+                        desc: "A1-style reproduction of the event artwork.",
+                      },
+                      {
+                        title: "ACCESS PASS",
+                        desc: "Physical keepsake for the private members set.",
+                      },
+                    ].map((item) => (
+                      <div key={item.title} className="rounded-[1.4rem] border border-white/20 p-4">
+                        <div className="text-xs font-black tracking-[0.45em] text-white/55">
+                          MERCH
+                        </div>
+                        <div className="mt-3 text-2xl font-black tracking-[0.12em]">
+                          {item.title}
+                        </div>
+                        <p className="mt-3 text-sm leading-6 tracking-[0.06em] text-white/75">
+                          {item.desc}
+                        </p>
+                        <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-2 text-[0.65rem] font-black tracking-[0.35em]">
+                          COMING SOON
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "about" && (
+                <div className="relative p-4 sm:p-6">
+                  <SectionTitle eyebrow="ABOUT US" title="PRIVATE MEMBERS CLUB™" />
+                  <div className="mt-5 grid gap-4 lg:grid-cols-2">
+                    <div className="rounded-[1.4rem] border border-white/20 p-5">
+                      <div className="text-xs font-black tracking-[0.45em] text-white/55">
+                        MANIFESTO
+                      </div>
+                      <p className="mt-3 max-w-xl text-sm leading-7 tracking-[0.06em] text-white/80 sm:text-base">
+                        This demo is built as a mobile-first digital flyer: black-on-white,
+                        exclusive, fast, and focused on ticket conversion. Tap the poster, open
+                        the lineup, and jump straight into the artists.
+                      </p>
+                    </div>
+                    <div className="rounded-[1.4rem] border border-white/20 p-5">
+                      <div className="text-xs font-black tracking-[0.45em] text-white/55">
+                        EVENT INFO
+                      </div>
+                      <div className="mt-3 space-y-2 text-sm font-black tracking-[0.18em] sm:text-base">
+                        <div>VENUE: DEADWAX</div>
+                        <div>ENTRY: £5</div>
+                        <div>DOORS: 6PM</div>
+                        <div>BIRMINGHAM</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </section>
+
+            <aside className="relative flex flex-col gap-4">
+              <div className="rounded-[2rem] border border-white/20 bg-black/85 p-4 shadow-2xl shadow-black/50">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
+                      NOW SHOWING
+                    </div>
+                    <div className="mt-1 text-2xl font-black tracking-[0.14em]">
+                      {activeArtist.display}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => setSoundOn((v) => !v)}
+                    className={cn(
+                      "inline-flex items-center gap-2 rounded-full border px-3 py-2 text-[0.65rem] font-black tracking-[0.3em] transition",
+                      soundOn ? "border-white bg-white text-black" : "border-white/20 text-white"
+                    )}
+                  >
+                    <Music2 className="h-4 w-4" />
+                    {soundOn ? "SOUND ON" : "SILENT"}
+                  </button>
+                </div>
+
+                <div className="mt-4 overflow-hidden rounded-[1.6rem] border border-white/20 bg-white/5">
+                  <div className="aspect-[1/1] w-full overflow-hidden bg-black">
+                    <img
+                      src={`/${activeArtist.key}.png`}
+                      alt={activeArtist.display}
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                        e.currentTarget.parentElement
+                          .querySelector(".fallback-artist")
+                          .style.display = "flex";
+                      }}
+                    />
+                    <div className="fallback-artist hidden h-full w-full items-center justify-center p-8 text-center text-3xl font-black tracking-[0.2em] text-white/80">
+                      {activeArtist.display}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center gap-3">
+                  <button
+                    onClick={togglePlay}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black transition hover:scale-[1.01]"
+                  >
+                    <Disc3 className="h-4 w-4" />
+                    PLAY TRACK
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("lineup")}
+                    className="inline-flex items-center justify-center rounded-full border border-white/20 p-3 text-white transition hover:border-white/70"
+                    aria-label="Open lineup"
+                  >
+                    <Menu className="h-5 w-5" />
+                  </button>
+                </div>
+
+                <div className="mt-4 rounded-[1.4rem] border border-white/20 p-4">
+                  <div className="text-xs font-black tracking-[0.45em] text-white/55">BIO</div>
+                  <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/80">
+                    {activeArtist.bio}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {[
+                      { label: "INSTAGRAM", href: "#" },
+                      { label: "SOUNDCLOUD", href: "#" },
+                      { label: "SPOTIFY", href: "#" },
+                    ].map((link) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        onClick={(e) => e.preventDefault()}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/20 px-3 py-2 text-[0.62rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70"
+                      >
+                        {link.label}
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="hidden rounded-[2rem] border border-white/20 bg-black/85 p-4 lg:block">
+                <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
+                  TICKET LAYER
+                </div>
+                <div className="mt-2 text-2xl font-black tracking-[0.12em]">£5 ENTRY</div>
+                <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/75">
+                  Keep the ticket action always visible. This button can later connect to your
+                  ticket provider or external checkout.
+                </p>
+                <button className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black">
+                  <Ticket className="h-4 w-4" />
+                  GET ACCESS
+                </button>
+              </div>
+            </aside>
+          </main>
+
+          <button className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-full border border-white bg-white px-5 py-3 text-[0.7rem] font-black tracking-[0.4em] text-black shadow-2xl shadow-black/40 md:hidden">
+            GET ACCESS · £5
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SectionTitle({ eyebrow, title }) {
+  return (
+    <div>
+      <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">{eyebrow}</div>
+      <div className="mt-1 text-2xl font-black tracking-[0.14em] sm:text-3xl">{title}</div>
+    </div>
+  );
+}
+
+function ArtistLine({ artists, onSelect }) {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
+      {artists.map((name, index) => {
+        const key = name.replace(/\s|\+|™|\.|,/g, "").toLowerCase();
+
+        return (
+          <button
+            key={`${name}-${index}`}
+            onClick={() => {
+              const normalized = name.toLowerCase();
+              if (normalized.includes("kazgetkash")) return onSelect("kazgetkash");
+              if (normalized.includes("luvatt")) return onSelect("luvatt");
+
+              const mapping = {
+                thaticekidd: "thaticekidd",
+                sicntwistd: "sicntwistd",
+                "nine priest": "ninepriest",
+                "10k": "10k",
+                marlo: "marlo",
+                revivechizl: "revivechizl",
+                kyrxn: "kyrxn",
+                lonestar: "lonestar",
+                "noah knight": "noahknight",
+                whoispdp: "whoispdp",
+                wmb: "wmb",
+                dracoist: "dracoist",
+                velli: "velli",
+                "bby glo": "bbyglo",
+                rez818: "rez818",
+                dull3n: "dull3n",
+              };
+
+              onSelect(mapping[normalized] || key);
+            }}
+            className="transition hover:opacity-70"
+          >
+            {name}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
