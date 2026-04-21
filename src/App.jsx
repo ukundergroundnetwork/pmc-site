@@ -544,7 +544,7 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "DULL3N", "BBY GLO"]}
+                          artists={["REVIVECHIZL", "KYRXN", "DULL3N"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
@@ -553,7 +553,11 @@ export default function App() {
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
                         <ArtistLine
-                          artists={["LUVATT + ROMEREO", "WHOISPDP", "VELLI", "BBY GLO", "REZ818"]}
+                          artists={["LUVATT + ROMEREO", "WHOISPDP", "VELLI"]}
+                          onSelect={selectArtist}
+                        />
+                        <ArtistLine
+                          artists={["BBY GLO", "REZ818"]}
                           onSelect={selectArtist}
                         />
                       </div>
@@ -564,16 +568,20 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "10K", "DRACOIST"]}
+                          artists={["REVIVECHIZL", "KYRXN", "10K"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["WHOISPDP", "LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "WMB"]}
+                          artists={["WHOISPDP", "DRACOIST", "DULL3N"]}
+                          onSelect={selectArtist}
+                        />
+                        <ArtistLine
+                          artists={["LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "WMB"]}
                           onSelect={selectArtist}
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
                         <ArtistLine
-                          artists={["LUVATT + ROMEREO", "VELLI", "REZ818", "DULL3N"]}
+                          artists={["LUVATT + ROMEREO", "VELLI", "REZ818"]}
                           onSelect={selectArtist}
                         />
                       </div>
