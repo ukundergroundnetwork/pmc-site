@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 
 const ACCESS_PASSWORD = "ukugn2";
+const TICKET_LINK =
+  "https://events.bookitbee.com/ukundergroundnetwork/ukundergroundnetwork-presents-private-members-club/";
 
 const BASE_ARTISTS = [
   {
@@ -243,7 +245,6 @@ const BASE_ARTISTS = [
 const TABS = [
   { id: "poster", label: "POSTER" },
   { id: "lineup", label: "LINEUP" },
-  { id: "merch", label: "MERCH" },
   { id: "about", label: "ABOUT US" },
 ];
 
@@ -302,6 +303,23 @@ function parseBioLinks(text) {
   }
 
   return parsed;
+}
+
+function AccessButton({ className = "", label = "GET ACCESS" }) {
+  return (
+    <a
+      href={TICKET_LINK}
+      target="_blank"
+      rel="noreferrer"
+      className={cn(
+        "inline-flex items-center justify-center gap-2 border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black transition hover:scale-[1.01]",
+        className
+      )}
+    >
+      <Ticket className="h-4 w-4" />
+      {label}
+    </a>
+  );
 }
 
 export default function App() {
@@ -529,7 +547,8 @@ export default function App() {
                     className="mx-auto max-h-[42vh] w-auto max-w-full object-contain sm:max-h-[46vh]"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
-                      const fallback = e.currentTarget.parentElement.querySelector(".fallback-logo");
+                      const fallback =
+                        e.currentTarget.parentElement.querySelector(".fallback-logo");
                       if (fallback) fallback.style.display = "block";
                     }}
                   />
@@ -540,7 +559,7 @@ export default function App() {
 
                 <div className="w-full max-w-4xl text-center">
                   <div className="text-[0.65rem] font-black tracking-[0.42em] text-white/75 sm:text-[0.78rem]">
-                    UKUNDERGROUNDNETWORK PRESENTS:
+                    UKUNDERGROUNDNETWORK PRESENTS
                   </div>
 
                   <div className="mt-3 text-[clamp(1.9rem,5vw,4.6rem)] font-black leading-[0.94] tracking-[0.1em]">
@@ -629,7 +648,7 @@ export default function App() {
 
                 <div className="min-w-0">
                   <div className="truncate text-[0.64rem] font-bold tracking-[0.42em] text-white/70">
-                    UKUNDERGROUNDNETWORK
+                    UKUNDERGROUNDNETWORK PRESENTS
                   </div>
                   <div className="truncate text-lg font-black tracking-[0.24em]">
                     PRIVATE MEMBERS CLUB 001
@@ -638,10 +657,7 @@ export default function App() {
               </div>
 
               <div className="hidden items-center gap-2 md:flex">
-                <button className="inline-flex items-center gap-2 border border-white bg-white px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] text-black">
-                  <Ticket className="h-4 w-4" />
-                  GET ACCESS
-                </button>
+                <AccessButton label="GET ACCESS" />
 
                 {TABS.map((tab) => (
                   <button
@@ -685,10 +701,7 @@ export default function App() {
 
           <main className="mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-12 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
             <div className="md:hidden">
-              <button className="inline-flex w-full items-center justify-center gap-2 border border-white bg-white px-4 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black">
-                <Ticket className="h-4 w-4" />
-                GET ACCESS
-              </button>
+              <AccessButton className="w-full py-4" label="GET ACCESS" />
             </div>
 
             <section className="relative overflow-hidden border border-white/20 bg-black/85 shadow-2xl shadow-black/50">
@@ -837,55 +850,18 @@ export default function App() {
                 </div>
               )}
 
-              {activeTab === "merch" && (
-                <div className="relative p-4 sm:p-6">
-                  <SectionTitle eyebrow="MERCH" title="LIMITED RUN" />
-                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
-                    {[
-                      {
-                        title: "PMC TEE",
-                        desc: "Heavyweight black tee with stacked white print.",
-                      },
-                      {
-                        title: "POSTER PRINT",
-                        desc: "A1-style reproduction of the event artwork.",
-                      },
-                      {
-                        title: "ACCESS PASS",
-                        desc: "Physical keepsake for the private members set.",
-                      },
-                    ].map((item) => (
-                      <div key={item.title} className="border border-white/20 p-4">
-                        <div className="text-xs font-black tracking-[0.45em] text-white/55">
-                          MERCH
-                        </div>
-                        <div className="mt-3 text-2xl font-black tracking-[0.12em]">
-                          {item.title}
-                        </div>
-                        <p className="mt-3 text-sm leading-6 tracking-[0.06em] text-white/75">
-                          {item.desc}
-                        </p>
-                        <div className="mt-4 inline-flex items-center gap-2 border border-white/20 px-3 py-2 text-[0.65rem] font-black tracking-[0.35em]">
-                          COMING SOON
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {activeTab === "about" && (
                 <div className="relative p-4 sm:p-6">
-                  <SectionTitle eyebrow="ABOUT US" title="PRIVATE MEMBERS CLUB™" />
+                  <SectionTitle eyebrow="ABOUT US" title="UKUNDERGROUNDNETWORK" />
                   <div className="mt-5 grid gap-4 lg:grid-cols-2">
                     <div className="border border-white/20 p-5">
                       <div className="text-xs font-black tracking-[0.45em] text-white/55">
-                        MANIFESTO
+                        WHO WE ARE
                       </div>
                       <p className="mt-3 max-w-xl text-sm leading-7 tracking-[0.06em] text-white/80 sm:text-base">
-                        This demo is built as a mobile-first digital flyer: black-on-white,
-                        exclusive, fast, and focused on ticket conversion. Tap the poster, open
-                        the lineup, and jump straight into the artists.
+                        We created UKUNDERGROUNDNETWORK to connect, not compete. We aim
+                        to be the glue between promoters and creatives in the UK music
+                        scene.
                       </p>
                     </div>
                     <div className="border border-white/20 p-5">
@@ -1000,17 +976,13 @@ export default function App() {
 
               <div className="hidden border border-white/20 bg-black/85 p-4 lg:block">
                 <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
-                  TICKET LAYER
+                  PRIVATE MEMBERS CLUB 001
                 </div>
                 <div className="mt-2 text-2xl font-black tracking-[0.12em]">£5 ENTRY</div>
                 <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/75">
-                  Keep the ticket action always visible. This button can later connect to your
-                  ticket provider or external checkout.
+                  CLICK HERE TO GAIN ACCESS TO OUR EVENT.
                 </p>
-                <button className="mt-4 inline-flex w-full items-center justify-center gap-2 border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black">
-                  <Ticket className="h-4 w-4" />
-                  GET ACCESS
-                </button>
+                <AccessButton className="mt-4 w-full" label="GET ACCESS" />
               </div>
             </aside>
           </main>
