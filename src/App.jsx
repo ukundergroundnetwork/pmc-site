@@ -110,7 +110,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
-    imagePosition: "center 20%",
+    imagePosition: "center 5%",
   },
   {
     display: "WHOISPDP",
@@ -173,7 +173,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
-    imagePosition: "center 20%",
+    imagePosition: "center 5%",
   },
   {
     display: "REZ818",
@@ -182,7 +182,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
-    imagePosition: "center 20%",
+    imagePosition: "center 10%",
   },
   {
     display: "DULL3N",
