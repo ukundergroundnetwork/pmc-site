@@ -113,6 +113,32 @@ const ARTISTS = [
     key: "dull3n",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
   },
+
+  {
+    display: "DJ JACKY P",
+    key: "djjackyp",
+    bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ JACKY P.",
+  },
+  {
+    display: "BARTZ",
+    key: "bartz",
+    bio: "DJ bio placeholder. Replace this with a short 2–4 line description for BARTZ.",
+  },
+  {
+    display: "DJ 1TAKE",
+    key: "dj1take",
+    bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ 1TAKE.",
+  },
+  {
+    display: "DJ SCATTYSOPHIIE",
+    key: "djscattysophiie",
+    bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ SCATTYSOPHIIE.",
+  },
+  {
+    display: "DJ SKI",
+    key: "djski",
+    bio: "DJ bio placeholder. Replace this with a short 2–4 line description for DJ SKI.",
+  },
 ];
 
 const TABS = [
@@ -518,7 +544,7 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "DULL3N", "WHOISPDP"]}
+                          artists={["REVIVECHIZL", "KYRXN", "DULL3N", "BBY GLO"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
@@ -527,22 +553,22 @@ export default function App() {
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
                         <ArtistLine
-                          artists={["LUVATT + ROMEREO", "VELLI", "BBY GLO", "REZ818"]}
+                          artists={["LUVATT + ROMEREO", "VELLI", "WHOISPDP", "REZ818"]}
                           onSelect={selectArtist}
                         />
                       </div>
 
                       <div className="grid gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em] sm:hidden">
                         <ArtistLine
-                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "10K", "MARLO"]}
+                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "MARLO"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "WHOISPDP", "VELLI"]}
+                          artists={["REVIVECHIZL", "KYRXN", "10K", "DRACOIST", "VELLI"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "WMB", "DRACOIST"]}
+                          artists={["WHOISPDP", "LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "WMB"]}
                           onSelect={selectArtist}
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
@@ -554,7 +580,10 @@ export default function App() {
                     </div>
 
                     <div className="border-t border-white/80 pt-3 text-center text-[0.62rem] font-black tracking-[0.35em] text-white/90 sm:text-[0.72rem]">
-                      SOUNDS BY DJ JACKY P, BARTZ, DJ 1TAKE, DJ SCATTYSOPHIIE, DJ SKI
+                      <ArtistLine
+                        artists={["DJ JACKY P", "BARTZ", "DJ 1TAKE", "DJ SCATTYSOPHIIE", "DJ SKI"]}
+                        onSelect={selectArtist}
+                      />
                     </div>
                   </div>
                 </div>
@@ -562,7 +591,7 @@ export default function App() {
 
               {activeTab === "lineup" && (
                 <div className="relative p-4 sm:p-6">
-                  <SectionTitle eyebrow="LINEUP INDEX" title="SELECT AN ARTIST" />
+                  <SectionTitle eyebrow="LINEUP INDEX" title="SELECT AN ARTIST OR DJ" />
                   <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {ARTISTS.map((artist) => (
                       <button
@@ -582,7 +611,7 @@ export default function App() {
                               activeArtistKey === artist.key ? "text-black/50" : "text-white/55"
                             )}
                           >
-                            ARTIST
+                            PROFILE
                           </div>
                           <div className="mt-1 text-xl font-black tracking-[0.12em]">
                             {artist.display}
@@ -863,6 +892,12 @@ function mapArtistNameToKey(name) {
     "bby glo": "bbyglo",
     rez818: "rez818",
     dull3n: "dull3n",
+    "dj jacky p": "djjackyp",
+    bartz: "bartz",
+    "dj 1take": "dj1take",
+    djscattysophiie: "djscattysophiie",
+    "dj scattysophiie": "djscattysophiie",
+    "dj ski": "djski",
   };
 
   return mapping[normalized] || normalized.replace(/\s|\+|™|\.|,/g, "");
