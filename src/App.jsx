@@ -110,7 +110,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
-    imagePosition: "center 30%",
+    imagePosition: "center 40%",
   },
   {
     display: "WHOISPDP",
@@ -173,7 +173,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
-    imagePosition: "center 28%",
+    imagePosition: "center 40%",
   },
   {
     display: "REZ818",
@@ -182,7 +182,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
-    imagePosition: "center 28%",
+    imagePosition: "center 40%",
   },
   {
     display: "DULL3N",
@@ -191,7 +191,7 @@ const BASE_ARTISTS = [
     instagram: "",
     soundcloud: "",
     spotify: "",
-    imagePosition: "center",
+    imagePosition: "center 20%",
   },
   {
     display: "DJ JACKY P",
