@@ -10,7 +10,6 @@ import {
   X,
 } from "lucide-react";
 
-const ACCESS_PASSWORD = "ukugn2";
 const TICKET_LINK =
   "https://events.bookitbee.com/ukundergroundnetwork/ukundergroundnetwork-presents-private-members-club/";
 
@@ -54,6 +53,15 @@ const BASE_ARTISTS = [
   {
     display: "MARLO",
     key: "marlo",
+    bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
+    instagram: "",
+    soundcloud: "",
+    spotify: "",
+    imagePosition: "center",
+  },
+  {
+    display: "CUFFSKI",
+    key: "cuffski",
     bio: "High-energy demo bio placeholder. Replace this with a short 2–4 line artist description for the live site.",
     instagram: "",
     soundcloud: "",
@@ -323,9 +331,6 @@ function AccessButton({ className = "", label = "GET ACCESS" }) {
 }
 
 export default function App() {
-  const [passwordValue, setPasswordValue] = useState("");
-  const [passwordAccepted, setPasswordAccepted] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
   const [entered, setEntered] = useState(false);
   const [showExperiencePrompt, setShowExperiencePrompt] = useState(false);
   const [soundOn, setSoundOn] = useState(false);
@@ -375,7 +380,7 @@ export default function App() {
   useEffect(() => {
     document.body.style.overflowX = "hidden";
     document.documentElement.style.overflowX = "hidden";
-    document.body.style.overflowY = passwordAccepted && entered ? "auto" : "hidden";
+    document.body.style.overflowY = entered ? "auto" : "hidden";
 
     return () => {
       document.body.style.overflow = "";
@@ -383,7 +388,7 @@ export default function App() {
       document.body.style.overflowY = "";
       document.documentElement.style.overflowX = "";
     };
-  }, [passwordAccepted, entered]);
+  }, [entered]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -408,18 +413,6 @@ export default function App() {
       audio.play().catch(() => {});
     }
   }, [activeArtist, entered, soundOn]);
-
-  const handlePasswordSubmit = (e) => {
-    e.preventDefault();
-
-    if (passwordValue.trim().toLowerCase() === ACCESS_PASSWORD.toLowerCase()) {
-      setPasswordAccepted(true);
-      setPasswordError("");
-      return;
-    }
-
-    setPasswordError("Incorrect password.");
-  };
 
   const handleEnterExperience = () => {
     setShowExperiencePrompt(true);
@@ -488,48 +481,8 @@ export default function App() {
 
       <audio ref={audioRef} preload="none" />
 
-      {!passwordAccepted && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black px-6">
-          <div className="absolute inset-0 grain pointer-events-none" />
-          <form
-            onSubmit={handlePasswordSubmit}
-            className="relative w-full max-w-md border border-white/20 bg-black/90 p-6 sm:p-8"
-          >
-            <div className="text-[0.7rem] font-black tracking-[0.45em] text-white/60">
-              PRIVATE ACCESS
-            </div>
-            <h1 className="mt-3 text-3xl font-black leading-none tracking-[0.12em] sm:text-4xl">
-              ENTER PASSWORD
-            </h1>
-            <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75">
-              This preview is currently private while edits are in progress.
-            </p>
-
-            <input
-              type="password"
-              value={passwordValue}
-              onChange={(e) => setPasswordValue(e.target.value)}
-              placeholder="Password"
-              className="mt-6 w-full border border-white/20 bg-white/5 px-5 py-4 text-sm tracking-[0.08em] text-white outline-none placeholder:text-white/35 focus:border-white/60"
-            />
-
-            {passwordError && (
-              <div className="mt-3 text-sm font-medium text-white/70">{passwordError}</div>
-            )}
-
-            <button
-              type="submit"
-              className="mt-6 inline-flex w-full items-center justify-center gap-3 border border-white bg-white px-5 py-4 text-[0.72rem] font-black tracking-[0.35em] text-black"
-            >
-              CONTINUE
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </form>
-        </div>
-      )}
-
       <AnimatePresence>
-        {passwordAccepted && !entered && (
+        {!entered && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -630,7 +583,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {passwordAccepted && entered && (
+      {entered && (
         <div className="relative min-h-screen overflow-x-hidden">
           <div className="absolute inset-0 grain pointer-events-none" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(255,255,255,0.06),transparent_30%)]" />
@@ -748,7 +701,7 @@ export default function App() {
                         <div className="mt-1">SATURDAY 4TH JULY</div>
                       </div>
                       <div className="text-[clamp(1rem,3vw,2rem)] font-black leading-tight tracking-[0.12em]">
-                        20 ARTISTS / 1 NIGHT / BIRMINGHAM
+                        20+ / 1 NIGHT / BIRMINGHAM
                       </div>
                       <div className="text-[clamp(1rem,3vw,1.9rem)] font-black leading-tight tracking-[0.12em]">
                         + VERY SPECIAL GUESTS
@@ -775,22 +728,22 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["BBY GLO", "REZ818", "VELLI"]}
+                          artists={["BBY GLO", "REZ818", "VELLI", "CUFFSKI"]}
                           onSelect={selectArtist}
                         />
                       </div>
 
                       <div className="grid gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em] sm:hidden">
                         <ArtistLine
-                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "MARLO"]}
+                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["REVIVECHIZL", "KYRXN", "10K"]}
+                          artists={["MARLO", "CUFFSKI", "REVIVECHIZL", "KYRXN"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["WHOISPDP", "DRACOIST", "DULL3N"]}
+                          artists={["10K", "WHOISPDP", "DRACOIST", "DULL3N"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
@@ -1070,6 +1023,7 @@ function mapArtistNameToKey(name) {
     nineninetekk: "nineninetekk",
     "10k": "10k",
     marlo: "marlo",
+    cuffski: "cuffski",
     revivechizl: "revivechizl",
     kyrxn: "kyrxn",
     lonestar: "lonestar",
