@@ -456,14 +456,15 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen overflow-x-hidden bg-black text-white antialiased"
+      className="min-h-screen w-full overflow-x-hidden bg-black text-white antialiased"
       style={{ fontFamily: '"Oswald", sans-serif' }}
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap');
         html, body, #root {
           max-width: 100%;
-          overflow-x: hidden;
+          width: 100%;
+          overflow-x: hidden !important;
           background: #000;
         }
         @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .9; } 52% { opacity: .98; } }
@@ -600,11 +601,11 @@ export default function App() {
                 </button>
 
                 <div className="min-w-0">
-                  <div className="truncate text-[0.64rem] font-bold tracking-[0.42em] text-white/70">
+                  <div className="text-[0.64rem] font-bold tracking-[0.42em] text-white/70 md:truncate">
                     UKUNDERGROUNDNETWORK PRESENTS
                   </div>
-                  <div className="truncate text-lg font-black tracking-[0.24em]">
-                    PRIVATE MEMBERS CLUB 001
+                  <div className="text-sm font-black tracking-[0.18em] md:truncate md:text-lg md:tracking-[0.24em]">
+                    PMC 001
                   </div>
                 </div>
               </div>
