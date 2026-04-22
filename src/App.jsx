@@ -4,6 +4,7 @@ import {
   ArrowRight,
   Disc3,
   ExternalLink,
+  Instagram,
   Menu,
   Music2,
   Ticket,
@@ -12,6 +13,8 @@ import {
 
 const TICKET_LINK =
   "https://events.bookitbee.com/ukundergroundnetwork/ukundergroundnetwork-presents-private-members-club/";
+
+const INSTAGRAM_LINK = "https://www.instagram.com/ukundergroundnetwork";
 
 const BASE_ARTISTS = [
   {
@@ -281,7 +284,11 @@ function parseBioLinks(text) {
     if (!lines.length) continue;
 
     const name = lines[0];
-    if (!name || name.toLowerCase() === "notes" || name.toLowerCase() === "djs") {
+    if (
+      !name ||
+      name.toLowerCase() === "notes" ||
+      name.toLowerCase() === "djs"
+    ) {
       continue;
     }
 
@@ -381,12 +388,16 @@ export default function App() {
     document.body.style.overflowX = "hidden";
     document.documentElement.style.overflowX = "hidden";
     document.body.style.overflowY = entered ? "auto" : "hidden";
+    document.documentElement.style.overscrollBehaviorX = "none";
+    document.body.style.overscrollBehaviorX = "none";
 
     return () => {
       document.body.style.overflow = "";
       document.body.style.overflowX = "";
       document.body.style.overflowY = "";
+      document.body.style.overscrollBehaviorX = "";
       document.documentElement.style.overflowX = "";
+      document.documentElement.style.overscrollBehaviorX = "";
     };
   }, [entered]);
 
@@ -466,6 +477,16 @@ export default function App() {
           width: 100%;
           overflow-x: hidden !important;
           background: #000;
+          overscroll-behavior-x: none;
+        }
+        * {
+          box-sizing: border-box;
+        }
+        body {
+          touch-action: pan-y;
+        }
+        img, video, canvas, svg {
+          max-width: 100%;
         }
         @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .9; } 52% { opacity: .98; } }
         .grain {
@@ -505,6 +526,7 @@ export default function App() {
                         e.currentTarget.parentElement.querySelector(".fallback-logo");
                       if (fallback) fallback.style.display = "block";
                     }}
+                    draggable={false}
                   />
                   <div className="fallback-logo hidden text-[clamp(4rem,16vw,10rem)] font-black tracking-[0.08em] text-white">
                     UKUGN
@@ -560,9 +582,9 @@ export default function App() {
                 ENABLE SOUND?
               </h2>
               <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75 sm:text-base">
-                Click on any artist name on the poster to hear their music, read their
-                bio, or find links. Please choose whether to enable or disable sound
-                for this experience.
+                Click on any artist name on the poster to hear their music, read
+                their bio, or find links. Please choose whether to enable or
+                disable sound for this experience.
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -589,44 +611,87 @@ export default function App() {
           <div className="absolute inset-0 grain pointer-events-none" />
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(255,255,255,0.06),transparent_30%)]" />
 
-          <header className="relative z-10 sticky top-0 border-b border-white/20 bg-black/90 backdrop-blur-sm">
-            <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-              <div className="flex min-w-0 items-center gap-3">
-                <button
-                  onClick={() => setMenuOpen((v) => !v)}
-                  className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-white/20 text-white/90 md:hidden"
-                  aria-label="Open menu"
-                >
-                  {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-                </button>
+          <header className="relative z-10 sticky top-0 overflow-x-hidden border-b border-white/20 bg-black/90 backdrop-blur-sm">
+            <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+              <div className="md:hidden">
+                <div className="grid grid-cols-[48px_1fr_48px] items-center gap-2">
+                  <button
+                    onClick={() => setMenuOpen((v) => !v)}
+                    className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white/90"
+                    aria-label="Open menu"
+                  >
+                    {menuOpen ? (
+                      <X className="h-5 w-5" />
+                    ) : (
+                      <Menu className="h-5 w-5" />
+                    )}
+                  </button>
 
-                <div className="min-w-0">
-                  <div className="text-[0.64rem] font-bold tracking-[0.42em] text-white/70 md:truncate">
+                  <div className="flex items-center justify-center">
+                    <img
+                      src="/logo.png"
+                      alt="UK Underground Network logo"
+                      className="h-10 w-auto object-contain"
+                      draggable={false}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  </div>
+
+                  <div aria-hidden="true" className="h-11 w-11" />
+                </div>
+
+                <div className="mt-3 text-center">
+                  <div className="text-[0.58rem] font-bold tracking-[0.34em] text-white/70">
                     UKUNDERGROUNDNETWORK PRESENTS
                   </div>
-                  <div className="text-sm font-black tracking-[0.18em] md:truncate md:text-lg md:tracking-[0.24em]">
+                  <div className="mt-1 whitespace-nowrap text-[1rem] font-black tracking-[0.22em] text-white">
                     PMC 001
                   </div>
                 </div>
               </div>
 
-              <div className="hidden items-center gap-2 md:flex">
-                <AccessButton label="GET ACCESS" />
+              <div className="relative hidden min-h-[64px] items-center justify-between gap-4 md:flex">
+                <div className="min-w-0 pr-28">
+                  <div className="text-[0.64rem] font-bold tracking-[0.42em] text-white/70">
+                    UKUNDERGROUNDNETWORK PRESENTS
+                  </div>
+                  <div className="mt-1 text-lg font-black tracking-[0.24em] text-white">
+                    PMC 001
+                  </div>
+                </div>
 
-                {TABS.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={cn(
-                      "border px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] transition",
-                      activeTab === tab.id
-                        ? "border-white bg-white text-black"
-                        : "border-white/20 text-white hover:border-white/60"
-                    )}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
+                <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                  <img
+                    src="/logo.png"
+                    alt="UK Underground Network logo"
+                    className="h-12 w-auto object-contain"
+                    draggable={false}
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                </div>
+
+                <div className="relative z-10 flex items-center gap-2">
+                  <AccessButton label="GET ACCESS" />
+
+                  {TABS.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={cn(
+                        "border px-4 py-2 text-[0.7rem] font-black tracking-[0.35em] transition",
+                        activeTab === tab.id
+                          ? "border-white bg-white text-black"
+                          : "border-white/20 text-white hover:border-white/60"
+                      )}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -649,11 +714,16 @@ export default function App() {
                     {tab.label}
                   </button>
                 ))}
+
+                <AccessButton
+                  className="col-span-2 w-full py-4"
+                  label="GET ACCESS"
+                />
               </div>
             </div>
           </header>
 
-          <main className="relative z-10 mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-12 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
+          <main className="relative z-10 mx-auto grid max-w-7xl gap-5 overflow-x-hidden px-4 py-4 pb-12 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
             <div className="relative z-20 md:hidden">
               <AccessButton className="w-full py-4" label="GET ACCESS" />
             </div>
@@ -712,7 +782,13 @@ export default function App() {
                     <div className="space-y-3 py-4">
                       <div className="hidden gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em] sm:grid">
                         <ArtistLine
-                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "10K", "MARLO"]}
+                          artists={[
+                            "THATICEKIDD",
+                            "SICNTWISTD",
+                            "NINENINETEKK",
+                            "10K",
+                            "MARLO",
+                          ]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
@@ -720,7 +796,12 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["LONESTAR + NOAH KNIGHT", "WMB", "KAZGETKASH + JVR", "DRACOIST"]}
+                          artists={[
+                            "LONESTAR + NOAH KNIGHT",
+                            "WMB",
+                            "KAZGETKASH + JVR",
+                            "DRACOIST",
+                          ]}
                           onSelect={selectArtist}
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
@@ -748,7 +829,11 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={["LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "WMB"]}
+                          artists={[
+                            "LONESTAR + NOAH KNIGHT",
+                            "KAZGETKASH + JVR",
+                            "WMB",
+                          ]}
                           onSelect={selectArtist}
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
@@ -761,7 +846,13 @@ export default function App() {
 
                     <div className="border-t border-white/80 pt-3 text-center text-[0.62rem] font-black tracking-[0.35em] text-white/90 sm:text-[0.72rem]">
                       <ArtistLine
-                        artists={["DJ JACKY P", "BARTZ", "DJ 1TAKE", "DJ SCATTYSOPHIIE", "DJ SKI"]}
+                        artists={[
+                          "DJ JACKY P",
+                          "BARTZ",
+                          "DJ 1TAKE",
+                          "DJ SCATTYSOPHIIE",
+                          "DJ SKI",
+                        ]}
                         onSelect={selectArtist}
                       />
                     </div>
@@ -771,7 +862,10 @@ export default function App() {
 
               {activeTab === "lineup" && (
                 <div className="relative z-10 p-4 sm:p-6">
-                  <SectionTitle eyebrow="LINEUP INDEX" title="SELECT AN ARTIST OR DJ" />
+                  <SectionTitle
+                    eyebrow="LINEUP INDEX"
+                    title="SELECT AN ARTIST OR DJ"
+                  />
                   <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {artists.map((artist) => (
                       <button
@@ -784,20 +878,22 @@ export default function App() {
                             : "border-white/20 bg-white/0 text-white hover:border-white/60"
                         )}
                       >
-                        <div>
+                        <div className="min-w-0">
                           <div
                             className={cn(
                               "text-[0.68rem] font-black tracking-[0.45em]",
-                              activeArtistKey === artist.key ? "text-black/50" : "text-white/55"
+                              activeArtistKey === artist.key
+                                ? "text-black/50"
+                                : "text-white/55"
                             )}
                           >
                             PROFILE
                           </div>
-                          <div className="mt-1 text-xl font-black tracking-[0.12em]">
+                          <div className="mt-1 break-words text-xl font-black tracking-[0.12em]">
                             {artist.display}
                           </div>
                         </div>
-                        <ArrowRight className="h-5 w-5" />
+                        <ArrowRight className="h-5 w-5 shrink-0" />
                       </button>
                     ))}
                   </div>
@@ -813,11 +909,22 @@ export default function App() {
                         WHO WE ARE
                       </div>
                       <p className="mt-3 max-w-xl text-sm leading-7 tracking-[0.06em] text-white/80 sm:text-base">
-                        We created UKUNDERGROUNDNETWORK to connect, not compete. We aim
-                        to be the glue between promoters and creatives in the UK music
-                        scene.
+                        We created UKUNDERGROUNDNETWORK to connect, not compete.
+                        We aim to be the glue between promoters and creatives in
+                        the UK music scene.
                       </p>
+
+                      <a
+                        href={INSTAGRAM_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-6 inline-flex w-full items-center justify-center gap-3 border border-white bg-white px-5 py-4 text-center text-[0.78rem] font-black tracking-[0.3em] text-black transition hover:scale-[1.01] sm:w-auto"
+                      >
+                        <Instagram className="h-5 w-5" />
+                        FOLLOW US FOR UPDATES
+                      </a>
                     </div>
+
                     <div className="border border-white/20 p-5">
                       <div className="text-xs font-black tracking-[0.45em] text-white/55">
                         EVENT INFO
@@ -835,14 +942,14 @@ export default function App() {
               )}
             </section>
 
-            <aside className="relative z-10 flex flex-col gap-4">
+            <aside className="relative z-10 flex min-w-0 flex-col gap-4">
               <div className="border border-white/20 bg-black/85 p-4 shadow-2xl shadow-black/50">
                 <div className="flex items-start justify-between gap-4">
-                  <div>
+                  <div className="min-w-0">
                     <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
                       NOW SHOWING
                     </div>
-                    <div className="mt-1 text-2xl font-black tracking-[0.14em]">
+                    <div className="mt-1 break-words text-2xl font-black tracking-[0.14em]">
                       {activeArtist?.display || "SELECT AN ARTIST"}
                     </div>
                   </div>
@@ -850,8 +957,10 @@ export default function App() {
                   <button
                     onClick={() => setSoundOn((v) => !v)}
                     className={cn(
-                      "inline-flex items-center gap-2 border px-3 py-2 text-[0.65rem] font-black tracking-[0.3em] transition",
-                      soundOn ? "border-white bg-white text-black" : "border-white/20 text-white"
+                      "inline-flex shrink-0 items-center gap-2 border px-3 py-2 text-[0.65rem] font-black tracking-[0.3em] transition",
+                      soundOn
+                        ? "border-white bg-white text-black"
+                        : "border-white/20 text-white"
                     )}
                   >
                     <Music2 className="h-4 w-4" />
@@ -903,7 +1012,9 @@ export default function App() {
                 </div>
 
                 <div className="mt-4 border border-white/20 p-4">
-                  <div className="text-xs font-black tracking-[0.45em] text-white/55">BIO</div>
+                  <div className="text-xs font-black tracking-[0.45em] text-white/55">
+                    BIO
+                  </div>
                   <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/80">
                     {activeArtist?.bio ||
                       "Click on an artist to hear a preview, view their image, and learn more about them."}
@@ -932,7 +1043,9 @@ export default function App() {
                 <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
                   PRIVATE MEMBERS CLUB 001
                 </div>
-                <div className="mt-2 text-2xl font-black tracking-[0.12em]">£5 ENTRY</div>
+                <div className="mt-2 text-2xl font-black tracking-[0.12em]">
+                  £5 ENTRY
+                </div>
                 <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/75">
                   CLICK HERE TO GAIN ACCESS TO OUR EVENT.
                 </p>
@@ -949,8 +1062,12 @@ export default function App() {
 function SectionTitle({ eyebrow, title }) {
   return (
     <div>
-      <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">{eyebrow}</div>
-      <div className="mt-1 text-2xl font-black tracking-[0.14em] sm:text-3xl">{title}</div>
+      <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
+        {eyebrow}
+      </div>
+      <div className="mt-1 text-2xl font-black tracking-[0.14em] sm:text-3xl">
+        {title}
+      </div>
     </div>
   );
 }
