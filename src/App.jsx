@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Disc3,
   ExternalLink,
-  Instagram,
   Menu,
   Music2,
   Ticket,
@@ -388,8 +387,8 @@ export default function App() {
     document.body.style.overflowX = "hidden";
     document.documentElement.style.overflowX = "hidden";
     document.body.style.overflowY = entered ? "auto" : "hidden";
-    document.documentElement.style.overscrollBehaviorX = "none";
     document.body.style.overscrollBehaviorX = "none";
+    document.documentElement.style.overscrollBehaviorX = "none";
 
     return () => {
       document.body.style.overflow = "";
@@ -488,7 +487,12 @@ export default function App() {
         img, video, canvas, svg {
           max-width: 100%;
         }
-        @keyframes softFlicker { 0%, 100% { opacity: 1; } 48% { opacity: .98; } 50% { opacity: .9; } 52% { opacity: .98; } }
+        @keyframes softFlicker {
+          0%, 100% { opacity: 1; }
+          48% { opacity: .98; }
+          50% { opacity: .9; }
+          52% { opacity: .98; }
+        }
         .grain {
           background-image:
             radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
@@ -582,9 +586,9 @@ export default function App() {
                 ENABLE SOUND?
               </h2>
               <p className="mt-4 text-sm leading-7 tracking-[0.04em] text-white/75 sm:text-base">
-                Click on any artist name on the poster to hear their music, read
-                their bio, or find links. Please choose whether to enable or
-                disable sound for this experience.
+                Click on any artist name on the poster to hear their music, read their
+                bio, or find links. Please choose whether to enable or disable sound
+                for this experience.
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -782,13 +786,7 @@ export default function App() {
                     <div className="space-y-3 py-4">
                       <div className="hidden gap-3 text-center text-[clamp(1.1rem,3.6vw,2.3rem)] font-black leading-tight tracking-[0.1em] sm:grid">
                         <ArtistLine
-                          artists={[
-                            "THATICEKIDD",
-                            "SICNTWISTD",
-                            "NINENINETEKK",
-                            "10K",
-                            "MARLO",
-                          ]}
+                          artists={["THATICEKIDD", "SICNTWISTD", "NINENINETEKK", "10K", "MARLO"]}
                           onSelect={selectArtist}
                         />
                         <ArtistLine
@@ -796,12 +794,7 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={[
-                            "LONESTAR + NOAH KNIGHT",
-                            "WMB",
-                            "KAZGETKASH + JVR",
-                            "DRACOIST",
-                          ]}
+                          artists={["LONESTAR + NOAH KNIGHT", "WMB", "KAZGETKASH + JVR", "DRACOIST"]}
                           onSelect={selectArtist}
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
@@ -829,11 +822,7 @@ export default function App() {
                           onSelect={selectArtist}
                         />
                         <ArtistLine
-                          artists={[
-                            "LONESTAR + NOAH KNIGHT",
-                            "KAZGETKASH + JVR",
-                            "WMB",
-                          ]}
+                          artists={["LONESTAR + NOAH KNIGHT", "KAZGETKASH + JVR", "WMB"]}
                           onSelect={selectArtist}
                           keepPairsTogether={["LONESTAR + NOAH KNIGHT"]}
                         />
@@ -846,13 +835,7 @@ export default function App() {
 
                     <div className="border-t border-white/80 pt-3 text-center text-[0.62rem] font-black tracking-[0.35em] text-white/90 sm:text-[0.72rem]">
                       <ArtistLine
-                        artists={[
-                          "DJ JACKY P",
-                          "BARTZ",
-                          "DJ 1TAKE",
-                          "DJ SCATTYSOPHIIE",
-                          "DJ SKI",
-                        ]}
+                        artists={["DJ JACKY P", "BARTZ", "DJ 1TAKE", "DJ SCATTYSOPHIIE", "DJ SKI"]}
                         onSelect={selectArtist}
                       />
                     </div>
@@ -862,10 +845,7 @@ export default function App() {
 
               {activeTab === "lineup" && (
                 <div className="relative z-10 p-4 sm:p-6">
-                  <SectionTitle
-                    eyebrow="LINEUP INDEX"
-                    title="SELECT AN ARTIST OR DJ"
-                  />
+                  <SectionTitle eyebrow="LINEUP INDEX" title="SELECT AN ARTIST OR DJ" />
                   <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {artists.map((artist) => (
                       <button
@@ -882,9 +862,7 @@ export default function App() {
                           <div
                             className={cn(
                               "text-[0.68rem] font-black tracking-[0.45em]",
-                              activeArtistKey === artist.key
-                                ? "text-black/50"
-                                : "text-white/55"
+                              activeArtistKey === artist.key ? "text-black/50" : "text-white/55"
                             )}
                           >
                             PROFILE
@@ -909,9 +887,9 @@ export default function App() {
                         WHO WE ARE
                       </div>
                       <p className="mt-3 max-w-xl text-sm leading-7 tracking-[0.06em] text-white/80 sm:text-base">
-                        We created UKUNDERGROUNDNETWORK to connect, not compete.
-                        We aim to be the glue between promoters and creatives in
-                        the UK music scene.
+                        We created UKUNDERGROUNDNETWORK to connect, not compete. We aim
+                        to be the glue between promoters and creatives in the UK music
+                        scene.
                       </p>
 
                       <a
@@ -920,7 +898,7 @@ export default function App() {
                         rel="noopener noreferrer"
                         className="mt-6 inline-flex w-full items-center justify-center gap-3 border border-white bg-white px-5 py-4 text-center text-[0.78rem] font-black tracking-[0.3em] text-black transition hover:scale-[1.01] sm:w-auto"
                       >
-                        <Instagram className="h-5 w-5" />
+                        <ExternalLink className="h-5 w-5" />
                         FOLLOW US FOR UPDATES
                       </a>
                     </div>
@@ -958,9 +936,7 @@ export default function App() {
                     onClick={() => setSoundOn((v) => !v)}
                     className={cn(
                       "inline-flex shrink-0 items-center gap-2 border px-3 py-2 text-[0.65rem] font-black tracking-[0.3em] transition",
-                      soundOn
-                        ? "border-white bg-white text-black"
-                        : "border-white/20 text-white"
+                      soundOn ? "border-white bg-white text-black" : "border-white/20 text-white"
                     )}
                   >
                     <Music2 className="h-4 w-4" />
@@ -1012,9 +988,7 @@ export default function App() {
                 </div>
 
                 <div className="mt-4 border border-white/20 p-4">
-                  <div className="text-xs font-black tracking-[0.45em] text-white/55">
-                    BIO
-                  </div>
+                  <div className="text-xs font-black tracking-[0.45em] text-white/55">BIO</div>
                   <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/80">
                     {activeArtist?.bio ||
                       "Click on an artist to hear a preview, view their image, and learn more about them."}
@@ -1043,9 +1017,7 @@ export default function App() {
                 <div className="text-[0.62rem] font-black tracking-[0.55em] text-white/55">
                   PRIVATE MEMBERS CLUB 001
                 </div>
-                <div className="mt-2 text-2xl font-black tracking-[0.12em]">
-                  £5 ENTRY
-                </div>
+                <div className="mt-2 text-2xl font-black tracking-[0.12em]">£5 ENTRY</div>
                 <p className="mt-3 text-sm leading-7 tracking-[0.05em] text-white/75">
                   CLICK HERE TO GAIN ACCESS TO OUR EVENT.
                 </p>
