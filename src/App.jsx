@@ -310,9 +310,9 @@ function AccessButton({ className = "", label = "GET ACCESS" }) {
     <a
       href={TICKET_LINK}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       className={cn(
-        "inline-flex items-center justify-center gap-2 border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black transition hover:scale-[1.01]",
+        "relative z-20 inline-flex items-center justify-center gap-2 border border-white bg-white px-4 py-3 text-[0.72rem] font-black tracking-[0.35em] text-black transition hover:scale-[1.01]",
         className
       )}
     >
@@ -490,7 +490,7 @@ export default function App() {
 
       {!passwordAccepted && (
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-black px-6">
-          <div className="absolute inset-0 grain" />
+          <div className="absolute inset-0 grain pointer-events-none" />
           <form
             onSubmit={handlePasswordSubmit}
             className="relative w-full max-w-md border border-white/20 bg-black/90 p-6 sm:p-8"
@@ -536,7 +536,7 @@ export default function App() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black px-5 py-5 sm:px-8 sm:py-8"
           >
-            <div className="absolute inset-0 grain" />
+            <div className="absolute inset-0 grain pointer-events-none" />
 
             <div className="relative flex h-full w-full max-w-6xl flex-col items-center justify-center overflow-hidden">
               <div className="flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-5 sm:gap-6">
@@ -592,7 +592,7 @@ export default function App() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[60] flex items-center justify-center bg-black/92 px-6"
           >
-            <div className="absolute inset-0 grain" />
+            <div className="absolute inset-0 grain pointer-events-none" />
             <motion.div
               initial={{ y: 14, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -632,10 +632,10 @@ export default function App() {
 
       {passwordAccepted && entered && (
         <div className="relative min-h-screen overflow-x-hidden">
-          <div className="absolute inset-0 grain" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(255,255,255,0.06),transparent_30%)]" />
+          <div className="absolute inset-0 grain pointer-events-none" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),radial-gradient(circle_at_bottom,rgba(255,255,255,0.06),transparent_30%)]" />
 
-          <header className="sticky top-0 z-40 border-b border-white/20 bg-black/90 backdrop-blur-sm">
+          <header className="relative z-10 sticky top-0 border-b border-white/20 bg-black/90 backdrop-blur-sm">
             <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
               <div className="flex min-w-0 items-center gap-3">
                 <button
@@ -699,20 +699,20 @@ export default function App() {
             </div>
           </header>
 
-          <main className="mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-12 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
-            <div className="md:hidden">
+          <main className="relative z-10 mx-auto grid max-w-7xl gap-5 px-4 py-4 pb-12 sm:px-6 lg:grid-cols-[1.55fr_0.95fr] lg:gap-6">
+            <div className="relative z-20 md:hidden">
               <AccessButton className="w-full py-4" label="GET ACCESS" />
             </div>
 
             <section className="relative overflow-hidden border border-white/20 bg-black/85 shadow-2xl shadow-black/50">
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05),transparent_18%,transparent_82%,rgba(255,255,255,0.04))]" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.05),transparent_18%,transparent_82%,rgba(255,255,255,0.04))]" />
               <div
-                className="absolute inset-0 opacity-70"
+                className="pointer-events-none absolute inset-0 opacity-70"
                 style={{ animation: "softFlicker 7s infinite" }}
               />
 
               {activeTab === "poster" && (
-                <div className="relative p-4 sm:p-6">
+                <div className="relative z-10 p-4 sm:p-6">
                   <div className="border border-white/85 p-3 sm:p-4">
                     <div className="flex items-start justify-between gap-4 border-b border-white/80 pb-3">
                       <div className="max-w-[62%]">
@@ -816,7 +816,7 @@ export default function App() {
               )}
 
               {activeTab === "lineup" && (
-                <div className="relative p-4 sm:p-6">
+                <div className="relative z-10 p-4 sm:p-6">
                   <SectionTitle eyebrow="LINEUP INDEX" title="SELECT AN ARTIST OR DJ" />
                   <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
                     {artists.map((artist) => (
@@ -851,7 +851,7 @@ export default function App() {
               )}
 
               {activeTab === "about" && (
-                <div className="relative p-4 sm:p-6">
+                <div className="relative z-10 p-4 sm:p-6">
                   <SectionTitle eyebrow="ABOUT US" title="UKUNDERGROUNDNETWORK" />
                   <div className="mt-5 grid gap-4 lg:grid-cols-2">
                     <div className="border border-white/20 p-5">
@@ -881,7 +881,7 @@ export default function App() {
               )}
             </section>
 
-            <aside className="relative flex flex-col gap-4">
+            <aside className="relative z-10 flex flex-col gap-4">
               <div className="border border-white/20 bg-black/85 p-4 shadow-2xl shadow-black/50">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -962,7 +962,7 @@ export default function App() {
                           key={link.label}
                           href={link.href}
                           target="_blank"
-                          rel="noreferrer"
+                          rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 border border-white/20 px-3 py-2 text-[0.62rem] font-black tracking-[0.35em] text-white/90 transition hover:border-white/70"
                         >
                           {link.label}
