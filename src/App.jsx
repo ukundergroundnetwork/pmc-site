@@ -718,11 +718,6 @@ export default function App() {
                     {tab.label}
                   </button>
                 ))}
-
-                <AccessButton
-                  className="col-span-2 w-full py-4"
-                  label="GET ACCESS"
-                />
               </div>
             </div>
           </header>
@@ -776,7 +771,7 @@ export default function App() {
                         <div className="mt-1">SATURDAY 4TH JULY</div>
                       </div>
                       <div className="text-[clamp(1rem,3vw,2rem)] font-black leading-tight tracking-[0.12em]">
-                        20+ / 1 NIGHT / BIRMINGHAM
+                        20+ ARTISTS / 1 NIGHT / BIRMINGHAM
                       </div>
                       <div className="text-[clamp(1rem,3vw,1.9rem)] font-black leading-tight tracking-[0.12em]">
                         + VERY SPECIAL GUESTS
